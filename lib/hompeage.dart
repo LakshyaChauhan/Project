@@ -4,6 +4,8 @@ import 'package:project1/browse.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import 'package:project1/capture.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -56,34 +58,7 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            height: 120,
-                            child: TextButton(
-                              style: ButtonStyle(
-                                  shape: MaterialStatePropertyAll(
-                                      RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(90),
-                              ))),
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.camera_alt_outlined,
-                                    size: 50,
-                                    color: Colors.white,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    'Camera',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ],
-                              ),
-                              onPressed: () {},
-                            ),
-                          ),
+
                           const SizedBox(
                             width: 30,
                           ),
