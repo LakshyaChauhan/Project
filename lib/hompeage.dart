@@ -18,14 +18,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   File? selectedImage;
 
-  void openGallery() async {
+  void capture(ImageSource source) async {
     final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: source);
     if (pickedFile == null) return;
 
     final tempImage = File(pickedFile.path);
     setState(() {
       selectedImage = tempImage;
+      print('image got selected');
     });
   }
 
@@ -58,12 +59,12 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-
+                          Capture(camera: capture),
                           const SizedBox(
                             width: 30,
                           ),
                           Browse(
-                            gallery: openGallery,
+                            gallery: capture,
                           )
                         ],
                       ),

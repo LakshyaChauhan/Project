@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Capture extends StatelessWidget {
   const Capture({super.key, required this.camera});
 
-  final void Function() camera ;
+  final void Function(ImageSource) camera;
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +13,11 @@ class Capture extends StatelessWidget {
       child: TextButton(
         style: ButtonStyle(
             shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(90),
-            ))),
-        onPressed: camera,
+          borderRadius: BorderRadius.circular(90),
+        ))),
+        onPressed: () {
+          camera(ImageSource.camera);
+        },
         child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -37,5 +40,4 @@ class Capture extends StatelessWidget {
       ),
     );
   }
-
 }

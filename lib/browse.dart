@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Browse extends StatelessWidget {
   const Browse({super.key, required this.gallery});
 
-  final void Function() gallery;
+  final void Function(ImageSource) gallery;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,9 @@ class Browse extends StatelessWidget {
             shape: MaterialStatePropertyAll(RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(90),
         ))),
-        onPressed: gallery,
+        onPressed: () {
+          gallery(ImageSource.gallery);
+        },
         child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -37,6 +40,4 @@ class Browse extends StatelessWidget {
       ),
     );
   }
-
 }
-
