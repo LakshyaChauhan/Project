@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project1/browse.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,6 +14,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  File? selectedImage;
+
+  void openGallery() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile == null) return;
+
+    final tempImage = File(pickedFile.path);
+    setState(() {
+      selectedImage = tempImage;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -71,36 +87,9 @@ class _HomePageState extends State<HomePage> {
                           const SizedBox(
                             width: 30,
                           ),
-                          SizedBox(
-                            height: 120,
-                            child: TextButton(
-                              style: ButtonStyle(
-                                  shape: MaterialStatePropertyAll(
-                                      RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(90),
-                              ))),
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.search,
-                                    size: 50,
-                                    color: Colors.white,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    'Browse',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              onPressed: () {},
-                            ),
-                          ),
+                          Browse(
+                            gallery: openGallery,
+                          )
                         ],
                       ),
                     ),
