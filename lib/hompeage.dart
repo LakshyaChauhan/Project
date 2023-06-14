@@ -7,10 +7,8 @@ import 'dart:io';
 import 'package:project1/capture.dart';
 import 'package:project1/upload_image.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
 
   @override
   State<HomePage> createState() {
@@ -18,12 +16,10 @@ class HomePage extends StatefulWidget {
   }
 }
 
-File? selectedImage;
 
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
+class _HomePageState extends State<HomePage> {
+  File? selectedImage;
   void capture(ImageSource source) async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: source);
@@ -34,15 +30,16 @@ class HomePage extends StatelessWidget {
     setState(() {
       selectedImage = tempImage;
       print('image got selected');
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>Upload_Image(image: selectedImage)));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Upload_Image(image: selectedImage)));
     });
-
 
     selectedImage = tempImage;
     if (selectedImage != null) {
       print('jello world');
     }
-
   }
 
   @override
@@ -60,49 +57,46 @@ class HomePage extends StatelessWidget {
             height: 70,
             width: screenWidth - 80,
             padding: const EdgeInsets.all(7),
-            child: Column(
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        content: Container(
-                          width: 100,
-                          height: 230,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Capture(camera: capture),
-                              const SizedBox(
-                                width: 30,
-                              ),
-                              Browse(
-                                gallery: capture,
-                              )
-                            ],
+            child: ElevatedButton.icon(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    content: Container(
+                      width: 100,
+                      height: 230,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Capture(camera: capture),
+                          const SizedBox(
+                            width: 30,
                           ),
-                        ),
+                          Browse(
+                            gallery: capture,
+                          ),
+                          
+                        ],
                       ),
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.image,
-                    color: Colors.white,
-                    size: 32,
+                    ),
                   ),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 0, 96, 160)),
-                  label: Text(
-                    'Select Image',
-                    style: GoogleFonts.breeSerif(
-                        color: const Color.fromARGB(255, 255, 255, 255),
-                        fontSize: 20),
-                  ),
-                ),
-              ],
+                );
+              },
+              icon: const Icon(
+                Icons.image,
+                color: Colors.white,
+                size: 32,
+              ),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 0, 96, 160)),
+              label: Text(
+                'Select Image',
+                style: GoogleFonts.breeSerif(
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    fontSize: 20),
+              ),
             ),
           ),
         ),
