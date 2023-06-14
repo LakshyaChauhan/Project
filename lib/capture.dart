@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:project1/upload_image.dart';
+// import 'package:project1/upload_image.dart';
 
 class Capture extends StatelessWidget {
   const Capture({super.key, required this.camera
