@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
+
+import 'fetch_Image_size.dart';
 class Upload_Image extends StatelessWidget {
 final File? image;
   const Upload_Image({Key? key, required this.image}) : super(key: key);
@@ -43,7 +45,12 @@ final File? image;
                 width: 170,
                 height: 60,
                 child: ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      String imagePath = image!.path;
+                      fetchImageSize(imagePath)
+                          .then((size) => print('The size of the image is: $size'))
+                          .catchError((error) => print('Error: $error'));
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: CupertinoColors.activeBlue
                     ),
