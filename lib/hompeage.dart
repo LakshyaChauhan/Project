@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:project1/browse.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -17,16 +16,21 @@ class HomePage extends StatefulWidget {
 }
 
 
+class _HomePageState extends State<HomePage> {
+  File? selectedImage;
+
+
+
 
 class _HomePageState extends State<HomePage> {
   File? selectedImage;
+
   void capture(ImageSource source) async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: source);
     if (pickedFile == null) return;
 
     final tempImage = File(pickedFile.path);
-
     setState(() {
       selectedImage = tempImage;
       print('image got selected');
@@ -36,15 +40,18 @@ class _HomePageState extends State<HomePage> {
               builder: (context) => Upload_Image(image: selectedImage)));
     });
 
+
     selectedImage = tempImage;
     if (selectedImage != null) {
       print('jello world');
     }
+
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Project'),
@@ -53,6 +60,17 @@ class _HomePageState extends State<HomePage> {
         height: double.infinity,
         width: double.infinity,
         child: Center(
+
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Capture(camera: capture),
+              SizedBox(
+                height: 50,
+              ),
+              Browse(gallery: capture)
+            ],
+
           child: Container(
             height: 70,
             width: screenWidth - 80,
@@ -98,6 +116,7 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 20),
               ),
             ),
+
           ),
         ),
       ),
