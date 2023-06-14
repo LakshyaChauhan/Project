@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -45,50 +45,15 @@ class _HomePageState extends State<HomePage> {
         height: double.infinity,
         width: double.infinity,
         child: Center(
-          child: Container(
-            height: 70,
-            width: screenWidth - 80,
-            padding: const EdgeInsets.all(7),
-            child: ElevatedButton.icon(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    content: Container(
-                      width: 100,
-                      height: 230,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Capture(camera: capture),
-                          const SizedBox(
-                            width: 30,
-                          ),
-                          Browse(
-                            gallery: capture,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-              icon: const Icon(
-                Icons.image,
-                color: Colors.white,
-                size: 32,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Capture(camera: capture),
+              SizedBox(
+                height: 50,
               ),
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 0, 96, 160)),
-              label: Text(
-                'Select Image',
-                style: GoogleFonts.breeSerif(
-                    color: const Color.fromARGB(255, 255, 255, 255),
-                    fontSize: 20),
-              ),
-            ),
+              Browse(gallery: capture)
+            ],
           ),
         ),
       ),

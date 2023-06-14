@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Browse extends StatelessWidget {
@@ -8,34 +9,27 @@ class Browse extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 120,
-      child: TextButton(
-        style: ButtonStyle(
-            shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(90),
-        ))),
+    final screenWidth = MediaQuery.of(context).size.width;
+    return Container(
+      height: 70,
+      width: screenWidth - 80,
+      padding: const EdgeInsets.all(7),
+      child: ElevatedButton.icon(
         onPressed: () {
           gallery(ImageSource.gallery);
         },
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.search,
-              size: 50,
-              color: Colors.white,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Browse',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ],
+        icon: const Icon(
+          Icons.image,
+          color: Colors.white,
+          size: 32,
+        ),
+        style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromARGB(255, 0, 96, 160)),
+        label: Text(
+          'Browse Image',
+          style: GoogleFonts.breeSerif(
+              color: const Color.fromARGB(255, 255, 255, 255),
+              fontSize: 20),
         ),
       ),
     );
