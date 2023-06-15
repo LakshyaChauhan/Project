@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Capture(camera: capture),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Browse(gallery: capture)

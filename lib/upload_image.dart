@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project1/widgets/images_screen.dart';
 
 import 'fetch_Image_size.dart';
 
@@ -43,8 +44,14 @@ class UploadImage extends StatelessWidget {
                     onPressed: () {
                       String imagePath = image!.path;
                       fetchImageSize(imagePath)
-                          .then((size) =>
-                              print('The size of the image is: $size'))
+                          .then((size) => Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                print('Size of Image is $size');
+                                return ImageScreen(
+                                  sizeImage: size,
+                                  image: image!,
+                                );
+                              })))
                           .catchError((error) => print('Error: $error'));
                     },
                     style: ElevatedButton.styleFrom(

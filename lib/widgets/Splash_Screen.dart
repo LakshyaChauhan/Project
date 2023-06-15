@@ -3,21 +3,22 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:project1/hompeage.dart';
 
-class Splash_page extends StatefulWidget {
-  const Splash_page({Key? key}) : super(key: key);
+class Splashpage extends StatefulWidget {
+  const Splashpage({Key? key}) : super(key: key);
 
   @override
-  State<Splash_page> createState() => _Splash_pageState();
+  State<Splashpage> createState() => _SplashpageState();
 }
 
-class _Splash_pageState extends State<Splash_page> {
+class _SplashpageState extends State<Splashpage> {
   @override
   void initState() {
-    Timer(Duration(seconds: 4),() {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+    Timer(const Duration(seconds: 4),() {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
     });
     super.initState();
   }
+  @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width ;
     return Container(
