@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:project1/widgets/browse.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+
 import 'package:project1/widgets/capture.dart';
 import 'package:project1/upload_image.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
 
   @override
   State<HomePage> createState() {
@@ -23,35 +25,37 @@ class _HomePageState extends State<HomePage> {
     if (pickedFile == null) return;
 
     final tempImage = File(pickedFile.path);
-
     setState(() {
       selectedImage = tempImage;
       print('image got selected');
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => UploadImage(image: selectedImage)));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> UploadImage(image: selectedImage)));
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    
+
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Project'),
-        ),
-        body: SizedBox(
-          width: double.infinity,
+      appBar: AppBar(
+        title: const Text('Project'),
+      ),
+      body: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Capture(camera: capture),
-              const SizedBox(
+              SizedBox(
                 height: 50,
               ),
-              Browse(gallery: capture),
+              Browse(gallery: capture)
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
