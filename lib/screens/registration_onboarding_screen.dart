@@ -160,10 +160,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   onboardingDetails();
-                  Navigator.pushReplacement(
+
+                  Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const HomePage()));
+                          builder: (context) => const HomePage()),
+                          (route) => false,);
                 }
               },
               style: ElevatedButton.styleFrom(
