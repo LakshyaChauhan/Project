@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 Future<String> fetchImageSize(String imagePath) async {
-  var request = http.MultipartRequest('POST', Uri.parse('http://192.168.43.37:5000/image-size'));
+  var request = http.MultipartRequest('POST', Uri.parse('http://172.16.179.216:5000/image-size'));
   request.files.add(await http.MultipartFile.fromPath('image', imagePath));
 
   var response = await request.send();
