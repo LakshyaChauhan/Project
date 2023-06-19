@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/screens/images_screen.dart';
 
-import '../Functions/fetch_Image_size.dart';
+import '../Functions/fetch_image_size.dart';
 
 class UploadImage extends StatelessWidget {
   final File? image;
