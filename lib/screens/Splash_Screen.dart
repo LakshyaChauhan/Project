@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:project1/screens/hompeage.dart';
