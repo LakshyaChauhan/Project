@@ -3,13 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/screens/hompeage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:project1/Functions/userdata.dart';
+
 
 int? onboardingStatus;
 Future<void> onboardingDetails() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences preferences = await SharedPreferences.getInstance();
   onboardingStatus = preferences.getInt('onboarding_status');
-  await preferences.setInt('onboarding_status', 1);
+  await preferences.setInt('onboarding_status', 0);
 }
 
 class OnboardingScreen extends StatefulWidget {
@@ -160,12 +162,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   onboardingDetails();
-
                   Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomePage()),
-                          (route) => false,);
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                    (route) => false,
+                  );
+                  updateGoogleSheet(
+                      emailController.text, phoneNoController.text);
                 }
               },
               style: ElevatedButton.styleFrom(

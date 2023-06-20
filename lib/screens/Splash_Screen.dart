@@ -28,8 +28,11 @@ class _SplashpageState extends State<Splashpage> {
     getStatus();
     Timer(const Duration(seconds: 4), () {
       if (status == 0 || status == null) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const OnboardingScreen()));
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const OnboardingScreen()),
+          (route) => false,
+          );
       } else {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => const HomePage()));
