@@ -11,8 +11,6 @@ class UploadImage extends StatelessWidget {
   final File? image;
   const UploadImage({Key? key, required this.image}) : super(key: key);
 
-  
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -60,7 +58,7 @@ class UploadImage extends StatelessWidget {
                           .catchError(
                             (error) => print('Error: $error'),
                           );
-                      
+
                     },
                     style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12),
