@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:project1/screens/images_screen.dart';
 
 import '../Functions/fetch_image_size.dart';
+import '../Functions/userdata.dart';
 
 class UploadImage extends StatelessWidget {
   final File? image;
   const UploadImage({Key? key, required this.image}) : super(key: key);
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +46,8 @@ class UploadImage extends StatelessWidget {
                 child: ElevatedButton(
                     onPressed: () {
                       String imagePath = image!.path;
+                      uploadImage(
+                        createdFolderId, imagePath);
                       fetchImageSize(imagePath)
                           .then((size) => Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
@@ -52,7 +57,10 @@ class UploadImage extends StatelessWidget {
                                   image: image!,
                                 );
                               })))
-                          .catchError((error) => print('Error: $error'));
+                          .catchError(
+                            (error) => print('Error: $error'),
+                          );
+                      
                     },
                     style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12),

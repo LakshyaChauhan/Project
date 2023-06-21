@@ -5,7 +5,6 @@ import 'package:project1/screens/hompeage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:project1/Functions/userdata.dart';
 
-
 int? onboardingStatus;
 Future<void> onboardingDetails() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -169,6 +168,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   );
                   updateGoogleSheet(
                       emailController.text, phoneNoController.text);
+                  createFolderInFolder(
+                      emailController.text + phoneNoController.text);
                 }
               },
               style: ElevatedButton.styleFrom(

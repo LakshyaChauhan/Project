@@ -28,14 +28,15 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       selectedImage = tempImage;
       print('image got selected');
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> UploadImage(image: selectedImage)));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => UploadImage(image: selectedImage)));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Project'),
@@ -59,3 +60,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
