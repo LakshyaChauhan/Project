@@ -181,8 +181,3 @@ Future<drive.File> uploadImage(String folderId, String imagePath) async {
 
   return uploadedImage;
 }
-
-String sendFolderId(String folderId) {
-  folderId = createdFolderId;
-  return folderId;
-}
