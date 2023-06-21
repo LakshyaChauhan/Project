@@ -6,7 +6,7 @@ import 'package:googleapis_auth/auth_io.dart' as auth;
 
 var createdFolderId = '';
 
-void updateGoogleSheet(String email, String phone) async {
+void updateGoogleSheet(String name ,String email, String phone) async {
   // Load the service account credentials from a JSON file
   var credentials = auth.ServiceAccountCredentials.fromJson({
     "type": "service_account",
@@ -51,11 +51,11 @@ void updateGoogleSheet(String email, String phone) async {
 
     print(filledRowCount);
 
-    var range = "Sheet1!A${filledRowCount + 1}:B${filledRowCount + 1}";
+    var range = "Sheet1!A${filledRowCount + 1}:C${filledRowCount +1}";
 
     // Prepare the update data
     var data = [
-      [email, phone],
+      [name, email, phone],
     ];
     var updateData = sheets.ValueRange()..values = data;
 
