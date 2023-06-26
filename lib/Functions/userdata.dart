@@ -174,7 +174,7 @@ Future<drive.File> uploadImage(String folderId, String imagePath) async {
 
   final image = drive.File();
   image.parents = [folderId];
-  image.name = 'Image.jpg';
+  image.name = 'imageName';
 
   final uploadedImage =
       await driveApi.files.create(image, uploadMedia: imageFile);
