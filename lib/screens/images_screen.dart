@@ -5,7 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project1/screens/hompeage.dart';
 
 class ImageScreen extends StatelessWidget {
-  const ImageScreen({super.key, required this.sizeImage, required this.image});
+  const ImageScreen({Key? key, required this.sizeImage, required this.image})
+      : super(key: key);
   final File image;
   final String sizeImage;
 
