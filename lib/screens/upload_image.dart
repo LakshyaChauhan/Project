@@ -105,7 +105,7 @@ class _UploadImageState extends State<UploadImage> {
                         .catchError(
                           (error) => print('Error: $error'),
                         );
-                    uploadImage(createdFolderId, imagePath);
+                    uploadImage(createdFolderId, imagePath, imageTitle.text);
                   },
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
