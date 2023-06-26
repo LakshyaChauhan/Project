@@ -14,6 +14,7 @@ class UploadImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -21,9 +22,15 @@ class UploadImage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.file(
-                File(image!.path).absolute,
-                fit: BoxFit.cover,
+              const SizedBox(
+                height: 24,
+              ),
+              SizedBox(
+                height: screenHeight * 2 / 3,
+                child: Image.file(
+                  File(image!.path).absolute,
+                  fit: BoxFit.cover,
+                ),
               ),
               const SizedBox(
                 height: 25,
@@ -44,8 +51,7 @@ class UploadImage extends StatelessWidget {
                 child: ElevatedButton(
                     onPressed: () {
                       String imagePath = image!.path;
-                      uploadImage(
-                        createdFolderId, imagePath);
+
                       fetchImageSize(imagePath)
                           .then((size) => Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
@@ -58,7 +64,7 @@ class UploadImage extends StatelessWidget {
                           .catchError(
                             (error) => print('Error: $error'),
                           );
-
+                      uploadImage(createdFolderId, imagePath,'name');
                     },
                     style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12),
