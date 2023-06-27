@@ -26,7 +26,9 @@ class _SplashpageState extends State<Splashpage> {
   @override
   void initState() {
     getStatus();
+
     Timer(const Duration(seconds: 4), () {
+      print(status);
       if (status == 0 || status == null) {
         Navigator.pushAndRemoveUntil(
           context,

@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project1/screens/hompeage.dart';
 import 'package:project1/screens/images_screen.dart';
+import 'package:project1/screens/registration_onboarding_screen.dart';
 
 import '../Functions/fetch_image_size.dart';
 import '../Functions/userdata.dart';
@@ -17,6 +19,7 @@ class UploadImage extends StatefulWidget {
 }
 
 class _UploadImageState extends State<UploadImage> {
+
   TextEditingController imageTitle = TextEditingController();
   @override
   void dispose() {
@@ -105,7 +108,11 @@ class _UploadImageState extends State<UploadImage> {
                         .catchError(
                           (error) => print('Error: $error'),
                         );
-                    uploadImage(createdFolderId, imagePath, imageTitle.text);
+
+                    uploadImage(folder_Id!, imagePath, imageTitle.text);
+                    setState(() {
+
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),

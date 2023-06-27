@@ -1,20 +1,43 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:googleapis/sheets/v4.dart' as sheets;
+import 'package:googleapis_auth/auth.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
+import 'package:googleapis_auth/auth_io.dart';
+import 'package:project1/screens/hompeage.dart';
 
-var createdFolderId = '';
+
+import 'package:project1/screens/registration_onboarding_screen.dart';
+//1y5mQhDfWm6Q9QElBevZ-FJafgTdr3bhA
+String folder_id = '';
+var titles_list=[];
+ Service_Credentials(){
+  final credentials = auth.ServiceAccountCredentials.fromJson({
+    "type": "service_account",
+    "private_key":
+    "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCU+Vu04hHvzzAg\nHUeENjA3dmx8ZgeWwyYBWv6oK0jaRxOqpkWHvDLFNkiWGCwCN4t2OGbgyk2w8P0/\nhka6cHl0cJRKbY2/5Zh4PBgty3gwx5+rd6eyd5FVuSCQr5317vCiAw8iiaa6OlZL\nqDJfDGawKCop4ukTi6WBuvMXI461fNGo/bedx75x5OpMctF7DCgZBzvHKbr79F74\nAeq71l19JClBQOg+ZKZSpBgA2+SEgU+W3i73aMWsLEFZV1BnTWE6rxLZ3QrR/09k\nHCsKeyb8HFgoYmy9zn5yf66ji+qfF8GtpxFKZ2J5+QNTb3OXHsFh/qOrryEkJvfw\nIm3j1ec3AgMBAAECggEADZ1qfbIJjJ6lWdIDNriTGIaIrKfQer1UDFyqGGl4S4ai\na/6tLRYMl8x5vsnvv7Ye10uZT2L9zbWAl50oeqKL3xHo45J2mXqcwCRR22GUlvSv\niYaye1OFI037hW2fZJoVQOFBsVjeNXfeaiSxkdE600+gZtqXjZM+KYiR7ePwh3KA\nrqvW6H7q+PNWUktjS3zGyRMToprK/CrrncYc3/RCZWNqS0Cs7kITA4n4b4Wirqep\nqSSyyzmSE92IT7Y9cOsh2xeZN8Ib1vC+YA+qGARAdosuW9LI7jOI9gS0eyeyA9AK\nVh1psHQuAuOZCQYSVZsjiQzI6zjCKkqJ+OGUYqEEPQKBgQDD1hC0lsjbEwMCMMhm\nVgslBCWDp1/A7IHF42Rm9U8lriNmOTv+dNUy4cGWsJesH3lMHRiToWhezJ3k3/QN\nw8DQdpQ1xlcSzl3sY7GQbcwvixgadJpSzvLLlQZvH+bqLCbV40zyvFZqst5wbJ2V\nVTkhr+4anNlpERTIL8+qZlMZ5QKBgQDCvbmiGMMdlxMBRvQvvT75ukEb9eJQcUly\negfvRHXOqIW5BcxF4G1EfA/2NjZn9Bf2yiyzrjRR3lrJPaIKfb26UpBunfhnpxzq\n3Rw7GTeiHevGlOURtLW8wetulB0kB+oDDnilJ0zOs0Rg0yd2y0phejAUdX4EtTO6\nMbxNYv566wKBgQC0VWIKubL5sTcbBEr1mZQnoPrekfjl0aPq0us4t/oLC6EDV/77\n4SAV+7dliPYSBOWQhlaEU6SlbyySfvvg1PqvvBHctuilo6zvqhnvknvs59vpOKiH\nSpRfjbpgB/N+fevBF89a0r2NAWs+AXbW9aRndfb/QKIfUyBc+1HyaslpVQKBgQCy\neOpN0l/PGIuEWiCkN84lVDsjgt8cVha34XqwH4/QC8Yx4Uxqpdm+L+z4+oo2DxB/\nTp5VNcwhU6TkVaXR85cT0WMo3YGwjQkFfgrHZr8DxmQ0pHSjG3iLOzWnK/rg8JfY\noUSUJ0ZPESATlLDQQFM0rqStu1f4vJBhjf9C9PzAbQKBgBOi8vo++tN4i+fSiBz2\nSjHR+92iUOWKkA617GMTaLRuh+1BL/dmBxLdbPvUiFC8gda12sKuLGs0HbTUAaOL\nDlfqjt9tzyXWq4WLZV4PHQu5Us0xu3/Nk2lrh/tUxhWn+trKcgiUFe7qn6aiEM+T\nSHtsPLAXVxhBLOJJtzj4XqUC\n-----END PRIVATE KEY-----\n",
+    "client_email":
+    "services-account-of-dic@snappy-mapper-390405.iam.gserviceaccount.com",
+    "client_id": "115092483468043548457",
+  });
+  return credentials;
+
+
+}
+
 
 void updateGoogleSheet(String name ,String email, String phone) async {
   // Load the service account credentials from a JSON file
-  var credentials = auth.ServiceAccountCredentials.fromJson({
+ /* var credentials = auth.ServiceAccountCredentials.fromJson({
     "type": "service_account",
     "private_key":
         "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCU+Vu04hHvzzAg\nHUeENjA3dmx8ZgeWwyYBWv6oK0jaRxOqpkWHvDLFNkiWGCwCN4t2OGbgyk2w8P0/\nhka6cHl0cJRKbY2/5Zh4PBgty3gwx5+rd6eyd5FVuSCQr5317vCiAw8iiaa6OlZL\nqDJfDGawKCop4ukTi6WBuvMXI461fNGo/bedx75x5OpMctF7DCgZBzvHKbr79F74\nAeq71l19JClBQOg+ZKZSpBgA2+SEgU+W3i73aMWsLEFZV1BnTWE6rxLZ3QrR/09k\nHCsKeyb8HFgoYmy9zn5yf66ji+qfF8GtpxFKZ2J5+QNTb3OXHsFh/qOrryEkJvfw\nIm3j1ec3AgMBAAECggEADZ1qfbIJjJ6lWdIDNriTGIaIrKfQer1UDFyqGGl4S4ai\na/6tLRYMl8x5vsnvv7Ye10uZT2L9zbWAl50oeqKL3xHo45J2mXqcwCRR22GUlvSv\niYaye1OFI037hW2fZJoVQOFBsVjeNXfeaiSxkdE600+gZtqXjZM+KYiR7ePwh3KA\nrqvW6H7q+PNWUktjS3zGyRMToprK/CrrncYc3/RCZWNqS0Cs7kITA4n4b4Wirqep\nqSSyyzmSE92IT7Y9cOsh2xeZN8Ib1vC+YA+qGARAdosuW9LI7jOI9gS0eyeyA9AK\nVh1psHQuAuOZCQYSVZsjiQzI6zjCKkqJ+OGUYqEEPQKBgQDD1hC0lsjbEwMCMMhm\nVgslBCWDp1/A7IHF42Rm9U8lriNmOTv+dNUy4cGWsJesH3lMHRiToWhezJ3k3/QN\nw8DQdpQ1xlcSzl3sY7GQbcwvixgadJpSzvLLlQZvH+bqLCbV40zyvFZqst5wbJ2V\nVTkhr+4anNlpERTIL8+qZlMZ5QKBgQDCvbmiGMMdlxMBRvQvvT75ukEb9eJQcUly\negfvRHXOqIW5BcxF4G1EfA/2NjZn9Bf2yiyzrjRR3lrJPaIKfb26UpBunfhnpxzq\n3Rw7GTeiHevGlOURtLW8wetulB0kB+oDDnilJ0zOs0Rg0yd2y0phejAUdX4EtTO6\nMbxNYv566wKBgQC0VWIKubL5sTcbBEr1mZQnoPrekfjl0aPq0us4t/oLC6EDV/77\n4SAV+7dliPYSBOWQhlaEU6SlbyySfvvg1PqvvBHctuilo6zvqhnvknvs59vpOKiH\nSpRfjbpgB/N+fevBF89a0r2NAWs+AXbW9aRndfb/QKIfUyBc+1HyaslpVQKBgQCy\neOpN0l/PGIuEWiCkN84lVDsjgt8cVha34XqwH4/QC8Yx4Uxqpdm+L+z4+oo2DxB/\nTp5VNcwhU6TkVaXR85cT0WMo3YGwjQkFfgrHZr8DxmQ0pHSjG3iLOzWnK/rg8JfY\noUSUJ0ZPESATlLDQQFM0rqStu1f4vJBhjf9C9PzAbQKBgBOi8vo++tN4i+fSiBz2\nSjHR+92iUOWKkA617GMTaLRuh+1BL/dmBxLdbPvUiFC8gda12sKuLGs0HbTUAaOL\nDlfqjt9tzyXWq4WLZV4PHQu5Us0xu3/Nk2lrh/tUxhWn+trKcgiUFe7qn6aiEM+T\nSHtsPLAXVxhBLOJJtzj4XqUC\n-----END PRIVATE KEY-----\n",
     "client_email":
         "services-account-of-dic@snappy-mapper-390405.iam.gserviceaccount.com",
     "client_id": "115092483468043548457",
-  });
+  });*/
 
   // Define the scopes required for accessing Google Sheets and Drive APIs
   const scopes = [
@@ -23,7 +46,7 @@ void updateGoogleSheet(String name ,String email, String phone) async {
   ];
 
   // Authenticate with the service account credentials
-  var client = await auth.clientViaServiceAccount(credentials, scopes);
+  var client = await auth.clientViaServiceAccount(Service_Credentials(), scopes);
 
   try {
     // Create a Sheets API client
@@ -67,13 +90,13 @@ void updateGoogleSheet(String name ,String email, String phone) async {
     // Define the range of cells to update (e.g., "Sheet1!A1:B2")
   } finally {
     // Close the client when done
-    client.close();
+
   }
 }
 
 void createFolderInFolder(String emailPhone) async {
   // Set up authentication
-  final credentials = auth.ServiceAccountCredentials.fromJson({
+  /*final credentials = auth.ServiceAccountCredentials.fromJson({
     "private_key_id": "18dcdfd9e7903caa9144f5065bcc449a3dd9fad3",
     "private_key":
         "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCU+Vu04hHvzzAg\nHUeENjA3dmx8ZgeWwyYBWv6oK0jaRxOqpkWHvDLFNkiWGCwCN4t2OGbgyk2w8P0/\nhka6cHl0cJRKbY2/5Zh4PBgty3gwx5+rd6eyd5FVuSCQr5317vCiAw8iiaa6OlZL\nqDJfDGawKCop4ukTi6WBuvMXI461fNGo/bedx75x5OpMctF7DCgZBzvHKbr79F74\nAeq71l19JClBQOg+ZKZSpBgA2+SEgU+W3i73aMWsLEFZV1BnTWE6rxLZ3QrR/09k\nHCsKeyb8HFgoYmy9zn5yf66ji+qfF8GtpxFKZ2J5+QNTb3OXHsFh/qOrryEkJvfw\nIm3j1ec3AgMBAAECggEADZ1qfbIJjJ6lWdIDNriTGIaIrKfQer1UDFyqGGl4S4ai\na/6tLRYMl8x5vsnvv7Ye10uZT2L9zbWAl50oeqKL3xHo45J2mXqcwCRR22GUlvSv\niYaye1OFI037hW2fZJoVQOFBsVjeNXfeaiSxkdE600+gZtqXjZM+KYiR7ePwh3KA\nrqvW6H7q+PNWUktjS3zGyRMToprK/CrrncYc3/RCZWNqS0Cs7kITA4n4b4Wirqep\nqSSyyzmSE92IT7Y9cOsh2xeZN8Ib1vC+YA+qGARAdosuW9LI7jOI9gS0eyeyA9AK\nVh1psHQuAuOZCQYSVZsjiQzI6zjCKkqJ+OGUYqEEPQKBgQDD1hC0lsjbEwMCMMhm\nVgslBCWDp1/A7IHF42Rm9U8lriNmOTv+dNUy4cGWsJesH3lMHRiToWhezJ3k3/QN\nw8DQdpQ1xlcSzl3sY7GQbcwvixgadJpSzvLLlQZvH+bqLCbV40zyvFZqst5wbJ2V\nVTkhr+4anNlpERTIL8+qZlMZ5QKBgQDCvbmiGMMdlxMBRvQvvT75ukEb9eJQcUly\negfvRHXOqIW5BcxF4G1EfA/2NjZn9Bf2yiyzrjRR3lrJPaIKfb26UpBunfhnpxzq\n3Rw7GTeiHevGlOURtLW8wetulB0kB+oDDnilJ0zOs0Rg0yd2y0phejAUdX4EtTO6\nMbxNYv566wKBgQC0VWIKubL5sTcbBEr1mZQnoPrekfjl0aPq0us4t/oLC6EDV/77\n4SAV+7dliPYSBOWQhlaEU6SlbyySfvvg1PqvvBHctuilo6zvqhnvknvs59vpOKiH\nSpRfjbpgB/N+fevBF89a0r2NAWs+AXbW9aRndfb/QKIfUyBc+1HyaslpVQKBgQCy\neOpN0l/PGIuEWiCkN84lVDsjgt8cVha34XqwH4/QC8Yx4Uxqpdm+L+z4+oo2DxB/\nTp5VNcwhU6TkVaXR85cT0WMo3YGwjQkFfgrHZr8DxmQ0pHSjG3iLOzWnK/rg8JfY\noUSUJ0ZPESATlLDQQFM0rqStu1f4vJBhjf9C9PzAbQKBgBOi8vo++tN4i+fSiBz2\nSjHR+92iUOWKkA617GMTaLRuh+1BL/dmBxLdbPvUiFC8gda12sKuLGs0HbTUAaOL\nDlfqjt9tzyXWq4WLZV4PHQu5Us0xu3/Nk2lrh/tUxhWn+trKcgiUFe7qn6aiEM+T\nSHtsPLAXVxhBLOJJtzj4XqUC\n-----END PRIVATE KEY-----\n",
@@ -81,11 +104,11 @@ void createFolderInFolder(String emailPhone) async {
         "services-account-of-dic@snappy-mapper-390405.iam.gserviceaccount.com",
     "client_id": "115092483468043548457",
     "type": "service_account",
-  });
+  });*/
 
   // Create an HTTP client authenticated with the service account
   final client = await auth
-      .clientViaServiceAccount(credentials, [drive.DriveApi.driveFileScope]);
+      .clientViaServiceAccount(Service_Credentials(), [drive.DriveApi.driveFileScope]);
 
   // Create a Drive API client
   final driveApi = drive.DriveApi(client);
@@ -103,69 +126,29 @@ void createFolderInFolder(String emailPhone) async {
     // Call the files.create() method on the Drive API client to create the folder
     final createdFolder = await driveApi.files.create(newFolder);
 
-    createdFolderId = createdFolder.id!;
+    folder_id = createdFolder.id!;
 
     print('New Folder ID: ${createdFolder.id}');
   } catch (e) {
     print('Error creating folder: $e');
   } finally {
     // Close the HTTP client
-    client.close();
   }
 }
 
-void uploadImageToDrive(File imageFile, String folderId) async {
-  // Set up authentication
-  final credentials = auth.ServiceAccountCredentials.fromJson({
-    "type": "service_account",
-    "private_key":
-        "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCU+Vu04hHvzzAg\nHUeENjA3dmx8ZgeWwyYBWv6oK0jaRxOqpkWHvDLFNkiWGCwCN4t2OGbgyk2w8P0/\nhka6cHl0cJRKbY2/5Zh4PBgty3gwx5+rd6eyd5FVuSCQr5317vCiAw8iiaa6OlZL\nqDJfDGawKCop4ukTi6WBuvMXI461fNGo/bedx75x5OpMctF7DCgZBzvHKbr79F74\nAeq71l19JClBQOg+ZKZSpBgA2+SEgU+W3i73aMWsLEFZV1BnTWE6rxLZ3QrR/09k\nHCsKeyb8HFgoYmy9zn5yf66ji+qfF8GtpxFKZ2J5+QNTb3OXHsFh/qOrryEkJvfw\nIm3j1ec3AgMBAAECggEADZ1qfbIJjJ6lWdIDNriTGIaIrKfQer1UDFyqGGl4S4ai\na/6tLRYMl8x5vsnvv7Ye10uZT2L9zbWAl50oeqKL3xHo45J2mXqcwCRR22GUlvSv\niYaye1OFI037hW2fZJoVQOFBsVjeNXfeaiSxkdE600+gZtqXjZM+KYiR7ePwh3KA\nrqvW6H7q+PNWUktjS3zGyRMToprK/CrrncYc3/RCZWNqS0Cs7kITA4n4b4Wirqep\nqSSyyzmSE92IT7Y9cOsh2xeZN8Ib1vC+YA+qGARAdosuW9LI7jOI9gS0eyeyA9AK\nVh1psHQuAuOZCQYSVZsjiQzI6zjCKkqJ+OGUYqEEPQKBgQDD1hC0lsjbEwMCMMhm\nVgslBCWDp1/A7IHF42Rm9U8lriNmOTv+dNUy4cGWsJesH3lMHRiToWhezJ3k3/QN\nw8DQdpQ1xlcSzl3sY7GQbcwvixgadJpSzvLLlQZvH+bqLCbV40zyvFZqst5wbJ2V\nVTkhr+4anNlpERTIL8+qZlMZ5QKBgQDCvbmiGMMdlxMBRvQvvT75ukEb9eJQcUly\negfvRHXOqIW5BcxF4G1EfA/2NjZn9Bf2yiyzrjRR3lrJPaIKfb26UpBunfhnpxzq\n3Rw7GTeiHevGlOURtLW8wetulB0kB+oDDnilJ0zOs0Rg0yd2y0phejAUdX4EtTO6\nMbxNYv566wKBgQC0VWIKubL5sTcbBEr1mZQnoPrekfjl0aPq0us4t/oLC6EDV/77\n4SAV+7dliPYSBOWQhlaEU6SlbyySfvvg1PqvvBHctuilo6zvqhnvknvs59vpOKiH\nSpRfjbpgB/N+fevBF89a0r2NAWs+AXbW9aRndfb/QKIfUyBc+1HyaslpVQKBgQCy\neOpN0l/PGIuEWiCkN84lVDsjgt8cVha34XqwH4/QC8Yx4Uxqpdm+L+z4+oo2DxB/\nTp5VNcwhU6TkVaXR85cT0WMo3YGwjQkFfgrHZr8DxmQ0pHSjG3iLOzWnK/rg8JfY\noUSUJ0ZPESATlLDQQFM0rqStu1f4vJBhjf9C9PzAbQKBgBOi8vo++tN4i+fSiBz2\nSjHR+92iUOWKkA617GMTaLRuh+1BL/dmBxLdbPvUiFC8gda12sKuLGs0HbTUAaOL\nDlfqjt9tzyXWq4WLZV4PHQu5Us0xu3/Nk2lrh/tUxhWn+trKcgiUFe7qn6aiEM+T\nSHtsPLAXVxhBLOJJtzj4XqUC\n-----END PRIVATE KEY-----\n",
-    "client_email":
-        "services-account-of-dic@snappy-mapper-390405.iam.gserviceaccount.com",
-    "client_id": "115092483468043548457",
-  });
-
-  // Create an authenticated HTTP client
-  final client = await auth.clientViaServiceAccount(credentials, [
-    drive.DriveApi.driveFileScope,
-    drive.DriveApi.driveAppdataScope,
-  ]);
-
-  // Create a Drive API client
-  final driveApi = drive.DriveApi(client);
-
-  try {
-    // Upload the image file
-    final media = drive.Media(imageFile.openRead(), imageFile.lengthSync());
-    final file = drive.File();
-    file.parents = [folderId];
-    final uploadedFile = await driveApi.files.create(
-      file,
-      uploadMedia: media,
-    );
-
-    // Print the file ID of the uploaded image
-    print('Image uploaded with file ID: ${uploadedFile.id}');
-  } catch (e) {
-    print('Error uploading image: $e');
-  } finally {
-    // Close the HTTP client
-    client.close();
-  }
-}
 
 Future<drive.File> uploadImage(String folderId, String imagePath,String imageName) async {
-  final credentials = auth.ServiceAccountCredentials.fromJson({
+  /*final credentials = auth.ServiceAccountCredentials.fromJson({
     "type": "service_account",
     "private_key":
         "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCU+Vu04hHvzzAg\nHUeENjA3dmx8ZgeWwyYBWv6oK0jaRxOqpkWHvDLFNkiWGCwCN4t2OGbgyk2w8P0/\nhka6cHl0cJRKbY2/5Zh4PBgty3gwx5+rd6eyd5FVuSCQr5317vCiAw8iiaa6OlZL\nqDJfDGawKCop4ukTi6WBuvMXI461fNGo/bedx75x5OpMctF7DCgZBzvHKbr79F74\nAeq71l19JClBQOg+ZKZSpBgA2+SEgU+W3i73aMWsLEFZV1BnTWE6rxLZ3QrR/09k\nHCsKeyb8HFgoYmy9zn5yf66ji+qfF8GtpxFKZ2J5+QNTb3OXHsFh/qOrryEkJvfw\nIm3j1ec3AgMBAAECggEADZ1qfbIJjJ6lWdIDNriTGIaIrKfQer1UDFyqGGl4S4ai\na/6tLRYMl8x5vsnvv7Ye10uZT2L9zbWAl50oeqKL3xHo45J2mXqcwCRR22GUlvSv\niYaye1OFI037hW2fZJoVQOFBsVjeNXfeaiSxkdE600+gZtqXjZM+KYiR7ePwh3KA\nrqvW6H7q+PNWUktjS3zGyRMToprK/CrrncYc3/RCZWNqS0Cs7kITA4n4b4Wirqep\nqSSyyzmSE92IT7Y9cOsh2xeZN8Ib1vC+YA+qGARAdosuW9LI7jOI9gS0eyeyA9AK\nVh1psHQuAuOZCQYSVZsjiQzI6zjCKkqJ+OGUYqEEPQKBgQDD1hC0lsjbEwMCMMhm\nVgslBCWDp1/A7IHF42Rm9U8lriNmOTv+dNUy4cGWsJesH3lMHRiToWhezJ3k3/QN\nw8DQdpQ1xlcSzl3sY7GQbcwvixgadJpSzvLLlQZvH+bqLCbV40zyvFZqst5wbJ2V\nVTkhr+4anNlpERTIL8+qZlMZ5QKBgQDCvbmiGMMdlxMBRvQvvT75ukEb9eJQcUly\negfvRHXOqIW5BcxF4G1EfA/2NjZn9Bf2yiyzrjRR3lrJPaIKfb26UpBunfhnpxzq\n3Rw7GTeiHevGlOURtLW8wetulB0kB+oDDnilJ0zOs0Rg0yd2y0phejAUdX4EtTO6\nMbxNYv566wKBgQC0VWIKubL5sTcbBEr1mZQnoPrekfjl0aPq0us4t/oLC6EDV/77\n4SAV+7dliPYSBOWQhlaEU6SlbyySfvvg1PqvvBHctuilo6zvqhnvknvs59vpOKiH\nSpRfjbpgB/N+fevBF89a0r2NAWs+AXbW9aRndfb/QKIfUyBc+1HyaslpVQKBgQCy\neOpN0l/PGIuEWiCkN84lVDsjgt8cVha34XqwH4/QC8Yx4Uxqpdm+L+z4+oo2DxB/\nTp5VNcwhU6TkVaXR85cT0WMo3YGwjQkFfgrHZr8DxmQ0pHSjG3iLOzWnK/rg8JfY\noUSUJ0ZPESATlLDQQFM0rqStu1f4vJBhjf9C9PzAbQKBgBOi8vo++tN4i+fSiBz2\nSjHR+92iUOWKkA617GMTaLRuh+1BL/dmBxLdbPvUiFC8gda12sKuLGs0HbTUAaOL\nDlfqjt9tzyXWq4WLZV4PHQu5Us0xu3/Nk2lrh/tUxhWn+trKcgiUFe7qn6aiEM+T\nSHtsPLAXVxhBLOJJtzj4XqUC\n-----END PRIVATE KEY-----\n",
     "client_email":
         "services-account-of-dic@snappy-mapper-390405.iam.gserviceaccount.com",
     "client_id": "115092483468043548457",
-  });
+  });*/
 
   final client = await auth
-      .clientViaServiceAccount(credentials, [drive.DriveApi.driveFileScope]);
+      .clientViaServiceAccount(Service_Credentials(), [drive.DriveApi.driveFileScope]);
   final driveApi = drive.DriveApi(client);
 
   final imageFile =
@@ -182,25 +165,87 @@ Future<drive.File> uploadImage(String folderId, String imagePath,String imageNam
 
   return uploadedImage;
 }
+Future<void> fetch_title(folderId) async {
+  // Load the credentials JSON file
 
-// void fetchUploadedImages() async {
-//   final credentials = auth.ServiceAccountCredentials.fromJson({
-//     "type": "service_account",
-//     "private_key":
-//         "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCU+Vu04hHvzzAg\nHUeENjA3dmx8ZgeWwyYBWv6oK0jaRxOqpkWHvDLFNkiWGCwCN4t2OGbgyk2w8P0/\nhka6cHl0cJRKbY2/5Zh4PBgty3gwx5+rd6eyd5FVuSCQr5317vCiAw8iiaa6OlZL\nqDJfDGawKCop4ukTi6WBuvMXI461fNGo/bedx75x5OpMctF7DCgZBzvHKbr79F74\nAeq71l19JClBQOg+ZKZSpBgA2+SEgU+W3i73aMWsLEFZV1BnTWE6rxLZ3QrR/09k\nHCsKeyb8HFgoYmy9zn5yf66ji+qfF8GtpxFKZ2J5+QNTb3OXHsFh/qOrryEkJvfw\nIm3j1ec3AgMBAAECggEADZ1qfbIJjJ6lWdIDNriTGIaIrKfQer1UDFyqGGl4S4ai\na/6tLRYMl8x5vsnvv7Ye10uZT2L9zbWAl50oeqKL3xHo45J2mXqcwCRR22GUlvSv\niYaye1OFI037hW2fZJoVQOFBsVjeNXfeaiSxkdE600+gZtqXjZM+KYiR7ePwh3KA\nrqvW6H7q+PNWUktjS3zGyRMToprK/CrrncYc3/RCZWNqS0Cs7kITA4n4b4Wirqep\nqSSyyzmSE92IT7Y9cOsh2xeZN8Ib1vC+YA+qGARAdosuW9LI7jOI9gS0eyeyA9AK\nVh1psHQuAuOZCQYSVZsjiQzI6zjCKkqJ+OGUYqEEPQKBgQDD1hC0lsjbEwMCMMhm\nVgslBCWDp1/A7IHF42Rm9U8lriNmOTv+dNUy4cGWsJesH3lMHRiToWhezJ3k3/QN\nw8DQdpQ1xlcSzl3sY7GQbcwvixgadJpSzvLLlQZvH+bqLCbV40zyvFZqst5wbJ2V\nVTkhr+4anNlpERTIL8+qZlMZ5QKBgQDCvbmiGMMdlxMBRvQvvT75ukEb9eJQcUly\negfvRHXOqIW5BcxF4G1EfA/2NjZn9Bf2yiyzrjRR3lrJPaIKfb26UpBunfhnpxzq\n3Rw7GTeiHevGlOURtLW8wetulB0kB+oDDnilJ0zOs0Rg0yd2y0phejAUdX4EtTO6\nMbxNYv566wKBgQC0VWIKubL5sTcbBEr1mZQnoPrekfjl0aPq0us4t/oLC6EDV/77\n4SAV+7dliPYSBOWQhlaEU6SlbyySfvvg1PqvvBHctuilo6zvqhnvknvs59vpOKiH\nSpRfjbpgB/N+fevBF89a0r2NAWs+AXbW9aRndfb/QKIfUyBc+1HyaslpVQKBgQCy\neOpN0l/PGIuEWiCkN84lVDsjgt8cVha34XqwH4/QC8Yx4Uxqpdm+L+z4+oo2DxB/\nTp5VNcwhU6TkVaXR85cT0WMo3YGwjQkFfgrHZr8DxmQ0pHSjG3iLOzWnK/rg8JfY\noUSUJ0ZPESATlLDQQFM0rqStu1f4vJBhjf9C9PzAbQKBgBOi8vo++tN4i+fSiBz2\nSjHR+92iUOWKkA617GMTaLRuh+1BL/dmBxLdbPvUiFC8gda12sKuLGs0HbTUAaOL\nDlfqjt9tzyXWq4WLZV4PHQu5Us0xu3/Nk2lrh/tUxhWn+trKcgiUFe7qn6aiEM+T\nSHtsPLAXVxhBLOJJtzj4XqUC\n-----END PRIVATE KEY-----\n",
-//     "client_email":
-//         "services-account-of-dic@snappy-mapper-390405.iam.gserviceaccount.com",
-//     "client_id": "115092483468043548457",
-//   });
 
-//   final client = await auth.clientViaServiceAccount(credentials, [drive.DriveApi.driveFileScope]);
-//   final driveApi = drive.DriveApi(client);
-//   final files = await driveApi.files.list(q: "'$createdFolderId' in parents");
+  // Parse the credentials and authorize the client
+  /*final credentials = auth.ServiceAccountCredentials.fromJson({
+    "type": "service_account",
+    "private_key":
+    "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCU+Vu04hHvzzAg\nHUeENjA3dmx8ZgeWwyYBWv6oK0jaRxOqpkWHvDLFNkiWGCwCN4t2OGbgyk2w8P0/\nhka6cHl0cJRKbY2/5Zh4PBgty3gwx5+rd6eyd5FVuSCQr5317vCiAw8iiaa6OlZL\nqDJfDGawKCop4ukTi6WBuvMXI461fNGo/bedx75x5OpMctF7DCgZBzvHKbr79F74\nAeq71l19JClBQOg+ZKZSpBgA2+SEgU+W3i73aMWsLEFZV1BnTWE6rxLZ3QrR/09k\nHCsKeyb8HFgoYmy9zn5yf66ji+qfF8GtpxFKZ2J5+QNTb3OXHsFh/qOrryEkJvfw\nIm3j1ec3AgMBAAECggEADZ1qfbIJjJ6lWdIDNriTGIaIrKfQer1UDFyqGGl4S4ai\na/6tLRYMl8x5vsnvv7Ye10uZT2L9zbWAl50oeqKL3xHo45J2mXqcwCRR22GUlvSv\niYaye1OFI037hW2fZJoVQOFBsVjeNXfeaiSxkdE600+gZtqXjZM+KYiR7ePwh3KA\nrqvW6H7q+PNWUktjS3zGyRMToprK/CrrncYc3/RCZWNqS0Cs7kITA4n4b4Wirqep\nqSSyyzmSE92IT7Y9cOsh2xeZN8Ib1vC+YA+qGARAdosuW9LI7jOI9gS0eyeyA9AK\nVh1psHQuAuOZCQYSVZsjiQzI6zjCKkqJ+OGUYqEEPQKBgQDD1hC0lsjbEwMCMMhm\nVgslBCWDp1/A7IHF42Rm9U8lriNmOTv+dNUy4cGWsJesH3lMHRiToWhezJ3k3/QN\nw8DQdpQ1xlcSzl3sY7GQbcwvixgadJpSzvLLlQZvH+bqLCbV40zyvFZqst5wbJ2V\nVTkhr+4anNlpERTIL8+qZlMZ5QKBgQDCvbmiGMMdlxMBRvQvvT75ukEb9eJQcUly\negfvRHXOqIW5BcxF4G1EfA/2NjZn9Bf2yiyzrjRR3lrJPaIKfb26UpBunfhnpxzq\n3Rw7GTeiHevGlOURtLW8wetulB0kB+oDDnilJ0zOs0Rg0yd2y0phejAUdX4EtTO6\nMbxNYv566wKBgQC0VWIKubL5sTcbBEr1mZQnoPrekfjl0aPq0us4t/oLC6EDV/77\n4SAV+7dliPYSBOWQhlaEU6SlbyySfvvg1PqvvBHctuilo6zvqhnvknvs59vpOKiH\nSpRfjbpgB/N+fevBF89a0r2NAWs+AXbW9aRndfb/QKIfUyBc+1HyaslpVQKBgQCy\neOpN0l/PGIuEWiCkN84lVDsjgt8cVha34XqwH4/QC8Yx4Uxqpdm+L+z4+oo2DxB/\nTp5VNcwhU6TkVaXR85cT0WMo3YGwjQkFfgrHZr8DxmQ0pHSjG3iLOzWnK/rg8JfY\noUSUJ0ZPESATlLDQQFM0rqStu1f4vJBhjf9C9PzAbQKBgBOi8vo++tN4i+fSiBz2\nSjHR+92iUOWKkA617GMTaLRuh+1BL/dmBxLdbPvUiFC8gda12sKuLGs0HbTUAaOL\nDlfqjt9tzyXWq4WLZV4PHQu5Us0xu3/Nk2lrh/tUxhWn+trKcgiUFe7qn6aiEM+T\nSHtsPLAXVxhBLOJJtzj4XqUC\n-----END PRIVATE KEY-----\n",
+    "client_email":
+    "services-account-of-dic@snappy-mapper-390405.iam.gserviceaccount.com",
+    "client_id": "115092483468043548457",
+  });*/
+  final client = await clientViaServiceAccount(Service_Credentials(), [drive.DriveApi.driveFileScope]);
 
-//   for (final file in files.files!) {
-//     final fileId = file.id;
-//     final thumbnailLink = file.thumbnailLink;
-//   // Use the file ID or thumbnail link to access and display the images as needed
-//   }
+  // Fetch image titles from Google Drive
+  final imageTitles = await fetchImageTitlesFromFolder(client, folderId);
 
-// }
+  // Handle the fetched image titles as needed
+  handleFetchedImageTitles(imageTitles);
+
+  // Close the client
+}
+
+Future<List<String?>> fetchImageTitlesFromFolder( client, folderId) async {
+  final driveApi = drive.DriveApi(client);
+
+
+  // Query for images in the specified folder
+  final fileList = await driveApi.files.list(
+    q: "'$folderId' in parents and mimeType contains 'image/'",
+    $fields: 'files(name)',
+  );
+
+  // Retrieve the image titles
+  final imageTitles = fileList.files!.map((file) => file.name).toList();
+  titles_list=imageTitles;
+
+  return imageTitles;
+}
+
+void handleFetchedImageTitles(List<String?> imageTitles) {
+  // Process the fetched image titles, e.g., display in Flutter UI
+  for (var title in imageTitles) {
+    print('Image Title: $title');
+
+  }
+}
+Future<Uint8List> fetchImageFromDrive(imageTitle) async {
+
+   final client = await clientViaServiceAccount(Service_Credentials(), [drive.DriveApi.driveFileScope]);
+
+
+  try {
+    final fileListUri = Uri.parse(
+        'https://www.googleapis.com/drive/v3/files'
+            '?q=mimeType="image/jpeg"'
+            '&name="$imageTitle"'
+            '&$folder_Id%20in%20parents'
+    );
+    final fileListResponse = await client.get(fileListUri);
+    final fileListJson = jsonDecode(fileListResponse.body);
+    final fileList = fileListJson['files'];
+
+    if (fileList != null && fileList.isNotEmpty) {
+      final file = fileList.first;
+      final fileId = file['id'];
+
+      final fileDownloadUri = Uri.parse('https://www.googleapis.com/drive/v3/files/$fileId?alt=media');
+      final fileDownloadResponse = await client.get(fileDownloadUri);
+
+      if (fileDownloadResponse.statusCode == 200) {
+        return fileDownloadResponse.bodyBytes;
+      }
+    }
+  } finally {
+    client.close();
+  }
+
+  throw Exception('Image not found');
+}
+
+
+

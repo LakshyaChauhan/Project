@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +9,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:project1/Functions/userdata.dart';
 
 int? onboardingStatus;
+String? Folder_id;
 Future<void> onboardingDetails() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences preferences = await SharedPreferences.getInstance();
   onboardingStatus = preferences.getInt('onboarding_status');
-  await preferences.setInt('onboarding_status', 0);
+  await preferences.setInt('onboarding_status', 1);
+  Folder_id = preferences.getString('folder_id');
+  print (Folder_id);
+  await preferences.setString('folder_id', folder_id);
 }
 
 class OnboardingScreen extends StatefulWidget {
@@ -26,6 +32,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneNoController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  bool is_loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -228,16 +235,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    onboardingDetails();
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                      (route) => false,
-                    );
+                    setState(() {
+                      is_loading=true;
+
+                    });
+
+
                     updateGoogleSheet(
                        nameController.text,  emailController.text, phoneNoController.text);
                     createFolderInFolder(
                         emailController.text + phoneNoController.text);
+                    print(folder_id);
+                    Timer(const Duration(seconds: 6), () {
+                      onboardingDetails();
+                      print(onboardingStatus);
+                      print(Folder_id);
+                      setState(() {
+                        is_loading=false;
+                      });
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => const HomePage()),
+                            (route) => false,
+                      );
+                    });
+
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -246,7 +268,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     shadowColor: Colors.green,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15))),
-                child: const Text(
+                child:is_loading?CircularProgressIndicator(
+                  color: Colors.white,
+                )
+                    :const Text(
                   'Submit',
                   style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700,color: Colors.white),
                 ),
