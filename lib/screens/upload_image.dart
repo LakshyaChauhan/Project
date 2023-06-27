@@ -20,10 +20,10 @@ class UploadImage extends StatefulWidget {
 
 class _UploadImageState extends State<UploadImage> {
 
-  TextEditingController imageTitle = TextEditingController();
+  TextEditingController imagetitle = TextEditingController();
   @override
   void dispose() {
-    imageTitle.dispose();
+    imagetitle.dispose();
     super.dispose();
   }
 
@@ -31,6 +31,7 @@ class _UploadImageState extends State<UploadImage> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.black,
         body: Center(
             child: SingleChildScrollView(
       child: SizedBox(
@@ -63,7 +64,7 @@ class _UploadImageState extends State<UploadImage> {
               width: screenWidth - 80,
               height: 50,
               child: TextField(
-                controller: imageTitle,
+                controller: imagetitle,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                     label: const Text('Enter the title for image'),
@@ -109,7 +110,7 @@ class _UploadImageState extends State<UploadImage> {
                           (error) => print('Error: $error'),
                         );
 
-                    uploadImage(folder_Id!, imagePath, imageTitle.text);
+                    uploadImage(folder_Id!, imagePath, imagetitle.text);
                     setState(() {
 
                     });

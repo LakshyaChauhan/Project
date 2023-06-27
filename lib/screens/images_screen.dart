@@ -15,6 +15,7 @@ class ImageScreen extends StatelessWidget {
     final screenwidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SizedBox(
         height: double.infinity,
         width: double.infinity,
@@ -47,11 +48,10 @@ class ImageScreen extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 25),
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      Navigator.pushAndRemoveUntil(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const HomePage()),
-                        (route) => false,
                       );
                     },
                     icon: const Icon(

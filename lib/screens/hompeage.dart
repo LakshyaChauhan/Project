@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:project1/Functions/userdata.dart';
 import 'package:project1/screens/history_Screen.dart';
+import 'package:project1/screens/registration_onboarding_screen.dart';
 import 'package:project1/widgets/browse.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -10,7 +11,7 @@ import 'dart:io';
 import 'package:project1/widgets/capture.dart';
 import 'package:project1/screens/upload_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-String? folder_Id ;
+
 Future<void> getFolderId() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -36,10 +37,25 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     // TODO: implement initState
-    getFolderId();
-    setState(() {
+    if(check==1){
+      print('hello');
+      Timer(Duration(seconds: 4), () {
+        getFolderId();
+        setState(() {
+          check=2;
 
-    });
+        });
+      });
+    }else{
+      print(folder_id);
+
+      getFolderId();
+      setState(() {
+
+      });
+
+    }
+
 
 
     super.initState();
@@ -67,12 +83,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: const Text('Project'),
         leading: IconButton(
             onPressed: (){
 
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> History_page()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> History_page()));
             },
             icon: Icon(Icons.history_sharp))
       ),
