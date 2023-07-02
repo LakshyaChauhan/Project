@@ -99,11 +99,11 @@ class _UploadImageState extends State<UploadImage> {
                   onPressed: () {
                     String imagePath = widget.image!.path;
                     fetchImageSize(imagePath)
-                        .then((size) => Navigator.push(context,
+                        .then((image) => Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return ImageScreen(
-                                sizeImage: size,
-                                image: widget.image!,
+                                image: image,
+
                               );
                             })))
                         .catchError(

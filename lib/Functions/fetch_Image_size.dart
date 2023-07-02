@@ -1,13 +1,22 @@
+import 'dart:convert';
+
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:http/http.dart' as http;
 
-Future<String> fetchImageSize(String imagePath) async {
+Future<Uint8List> fetchImageSize(String imagePath) async {
   var request = http.MultipartRequest(
-      'POST', Uri.parse('http://192.168.205.194:5000/image-size'));
+      'POST', Uri.parse('http://192.168.146.194:5000/image-size'));
   request.files.add(await http.MultipartFile.fromPath('image', imagePath));
 
   var response = await request.send();
   if (response.statusCode == 200) {
-    return await response.stream.bytesToString();
+     final img_response = await response.stream.toBytes();
+     return img_response;
+
+
+
   } else {
     throw Exception('Failed to fetch image size');
   }

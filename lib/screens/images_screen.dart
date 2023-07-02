@@ -1,18 +1,34 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project1/screens/hompeage.dart';
 
-class ImageScreen extends StatelessWidget {
-  const ImageScreen({super.key, required this.sizeImage, required this.image});
-  final File image;
-  final String sizeImage;
+class ImageScreen extends StatefulWidget {
+  const ImageScreen({super.key, required this.image});
+  final Uint8List image ;
+
+
+
+  @override
+  State<ImageScreen> createState() => _ImageScreenState();
+}
+
+class _ImageScreenState extends State<ImageScreen> {
+
+
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenwidth = MediaQuery.of(context).size.width;
+    
+    List<int> byteData = [116, 101, 109, 112, 95, 105, 109, 97, 103, 101, 46, 106, 112, 103];
+    final imageData = Uint8List.fromList(byteData);
+
+
+
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -27,18 +43,15 @@ class ImageScreen extends StatelessWidget {
               SizedBox(
                 height: screenHeight / 1.7,
                 width: screenwidth - 70,
-                child: Image.file(
-                  image,
-                  fit: BoxFit.fill,
+                child: Image.memory(
+                  widget.image
                 ),
-              ),
+                ),
+
               const SizedBox(
                 height: 50,
               ),
-              Text(
-                'The size of the image is $sizeImage',
-                style: GoogleFonts.breeSerif(fontSize: 18),
-              ),
+
               SizedBox(
                 height: screenHeight / 8,
               ),
