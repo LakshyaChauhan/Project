@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:googleapis_auth/auth_io.dart' as auth;
+import 'package:photo_view/photo_view.dart';
 
 import '../Functions/userdata.dart';
 
@@ -35,7 +36,11 @@ class Fetched_Image extends StatelessWidget {
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else if (snapshot.hasData) {
-                return Image.memory(snapshot.data!);
+                return PhotoView(
+                  imageProvider: MemoryImage(snapshot.data!),
+                      minScale: PhotoViewComputedScale.contained *0.97,
+
+                );
               } else {
                 return Text('Image not found');
               }

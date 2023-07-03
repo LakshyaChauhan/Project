@@ -140,7 +140,7 @@ void createFolderInFolder(String emailPhone) async {
 }
 
 
-Future<drive.File> uploadImage(String folderId, String imagePath,String imageName) async {
+Future<drive.File> uploadImage(String folderId, Uint8List imageData,String imageName) async {
   /*final credentials = auth.ServiceAccountCredentials.fromJson({
     "type": "service_account",
     "private_key":
@@ -154,8 +154,9 @@ Future<drive.File> uploadImage(String folderId, String imagePath,String imageNam
       .clientViaServiceAccount(Service_Credentials(), [drive.DriveApi.driveFileScope]);
   final driveApi = drive.DriveApi(client);
 
-  final imageFile =
-      drive.Media(File(imagePath).openRead(), await File(imagePath).length());
+  // final imageFile =
+  //     drive.Media(File(imagePath).openRead(), await File(imagePath).length());
+  final imageFile = drive.Media(Stream.value(imageData), imageData.length);
 
   final image = drive.File();
   image.parents = [folderId];

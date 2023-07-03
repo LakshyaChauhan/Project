@@ -1,9 +1,16 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project1/screens/hompeage.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:project1/screens/registration_onboarding_screen.dart';
+import 'package:project1/screens/zoom_image.dart';
+
+import '../Functions/userdata.dart';
+
 
 class ImageScreen extends StatefulWidget {
   const ImageScreen({super.key, required this.image});
@@ -17,74 +24,110 @@ class ImageScreen extends StatefulWidget {
 
 class _ImageScreenState extends State<ImageScreen> {
 
+  TextEditingController imagetitle = TextEditingController();
 
 
   @override
+  void dispose() {
+    imagetitle.dispose();
+    super.dispose();
+  }
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenwidth = MediaQuery.of(context).size.width;
-    
-    List<int> byteData = [116, 101, 109, 112, 95, 105, 109, 97, 103, 101, 46, 106, 112, 103];
-    final imageData = Uint8List.fromList(byteData);
-
-
-
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: SizedBox(
-        height: double.infinity,
-        width: double.infinity,
-        child: Center(
-          child: Container(
-            alignment: Alignment.topCenter,
-            child: Column(children: [
-              const SizedBox(height: 55),
-              SizedBox(
-                height: screenHeight / 1.7,
-                width: screenwidth - 70,
-                child: Image.memory(
-                  widget.image
-                ),
-                ),
+      body: Center(
+        child: SingleChildScrollView(
 
-              const SizedBox(
-                height: 50,
-              ),
-
-              SizedBox(
-                height: screenHeight / 8,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 25),
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomePage()),
-                      );
+          child: Column(
+              children: [
+             SizedBox(height: screenHeight/10),
+            SizedBox(
+              height: screenHeight/3,
+              width: screenwidth - 50,
+              child:
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ZoomImage(image: widget.image,)));
                     },
-                    icon: const Icon(
-                      Icons.home,
-                      color: Colors.white,
-                      size: 32,
+                      child: Image(image: MemoryImage(widget.image), fit: BoxFit.contain,)
+
+                  ),
+
+              ),
+
+             SizedBox(
+              height: screenHeight/7,
+            ),
+            SizedBox(
+              width: screenwidth - 80,
+              height: 50,
+              child: TextField(
+                controller: imagetitle,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                    label: const Text('Enter the title for image'),
+                    labelStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FontStyle.italic,
+                        color: CupertinoColors.systemGrey),
+                    disabledBorder: const OutlineInputBorder(
+                      borderSide:  BorderSide(
+                          color: CupertinoColors.systemGrey, width: 2.5),
                     ),
-                    style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 7),
-                        backgroundColor: const Color.fromARGB(255, 0, 96, 160)),
-                    label: Text(
-                      'Home Page',
-                      style: GoogleFonts.breeSerif(
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 20),
+                    border: const OutlineInputBorder(
+                      borderSide:  BorderSide(
+                          color: CupertinoColors.systemGrey, width: 5),
                     ),
+                    enabledBorder:const  OutlineInputBorder(
+                        borderSide:  BorderSide(
+                            color: CupertinoColors.systemGrey)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(21),
+                        borderSide: const BorderSide(
+                            color: CupertinoColors.activeBlue, width: 2.5))),
+              ),
+            ),
+            SizedBox(
+              height: screenHeight/6,
+            ),
+
+
+            SizedBox(
+              width: double.infinity,
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 25),
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomePage()),
+                    );
+                    uploadImage(folder_Id!, widget.image, imagetitle.text);
+
+                  },
+                  icon: const Icon(
+                    Icons.home,
+                    color: Colors.white,
+                    size: 32,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      backgroundColor: const Color.fromARGB(255, 0, 96, 160)),
+                  label: Text(
+                    'Home Page',
+                    style: GoogleFonts.breeSerif(
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        fontSize: 20),
                   ),
                 ),
               ),
-            ]),
+            ),
+          ],
           ),
         ),
       ),
