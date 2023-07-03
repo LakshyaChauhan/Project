@@ -90,6 +90,7 @@ void updateGoogleSheet(String name ,String email, String phone) async {
     // Define the range of cells to update (e.g., "Sheet1!A1:B2")
   } finally {
     // Close the client when done
+    client.close();
 
   }
 }
@@ -133,11 +134,13 @@ void createFolderInFolder(String emailPhone) async {
     print('Error creating folder: $e');
   } finally {
     // Close the HTTP client
+    client.close();
+
   }
 }
 
 
-Future<drive.File> uploadImage(String folderId, String imagePath,String imageName) async {
+Future<drive.File> uploadImage(String folderId, Uint8List imageData,String imageName) async {
   /*final credentials = auth.ServiceAccountCredentials.fromJson({
     "type": "service_account",
     "private_key":
@@ -151,8 +154,9 @@ Future<drive.File> uploadImage(String folderId, String imagePath,String imageNam
       .clientViaServiceAccount(Service_Credentials(), [drive.DriveApi.driveFileScope]);
   final driveApi = drive.DriveApi(client);
 
-  final imageFile =
-      drive.Media(File(imagePath).openRead(), await File(imagePath).length());
+  // final imageFile =
+  //     drive.Media(File(imagePath).openRead(), await File(imagePath).length());
+  final imageFile = drive.Media(Stream.value(imageData), imageData.length);
 
   final image = drive.File();
   image.parents = [folderId];
@@ -187,6 +191,8 @@ Future<void> fetch_title(folderId) async {
   handleFetchedImageTitles(imageTitles);
 
   // Close the client
+  client.close();
+
 }
 
 Future<List<String?>> fetchImageTitlesFromFolder( client, folderId) async {
@@ -213,13 +219,14 @@ void handleFetchedImageTitles(List<String?> imageTitles) {
 
   }
 }
-Future<Uint8List> fetchImageFromDrive(imageTitle) async {
 
-   final client = await clientViaServiceAccount(Service_Credentials(), [drive.DriveApi.driveFileScope]);
+Future<Uint8List> fetchImageFromDrive( String imageTitle) async {
+  final client = await clientViaServiceAccount(Service_Credentials(), [drive.DriveApi.driveFileScope]);
+  final driveApi = drive.DriveApi(client);
 
 
   try {
-    final fileListUri = Uri.parse(
+    /*final fileListUri = Uri.parse(
         'https://www.googleapis.com/drive/v3/files'
             '?q=mimeType="image/jpeg"'
             '&name="$imageTitle"'
@@ -227,13 +234,17 @@ Future<Uint8List> fetchImageFromDrive(imageTitle) async {
     );
     final fileListResponse = await client.get(fileListUri);
     final fileListJson = jsonDecode(fileListResponse.body);
-    final fileList = fileListJson['files'];
+    final fileList = fileListJson['files'];*/
+    final query = "name = '$imageTitle' and '$folder_Id' in parents";
+    final fileList = await driveApi.files.list(q: query);
+    print(fileList);
 
-    if (fileList != null && fileList.isNotEmpty) {
-      final file = fileList.first;
-      final fileId = file['id'];
+    if (fileList != null && fileList.files!.isNotEmpty) {
 
-      final fileDownloadUri = Uri.parse('https://www.googleapis.com/drive/v3/files/$fileId?alt=media');
+  final fileId = fileList.files![0].id;
+
+
+  final fileDownloadUri = Uri.parse('https://www.googleapis.com/drive/v3/files/$fileId?alt=media');
       final fileDownloadResponse = await client.get(fileDownloadUri);
 
       if (fileDownloadResponse.statusCode == 200) {
@@ -246,6 +257,7 @@ Future<Uint8List> fetchImageFromDrive(imageTitle) async {
 
   throw Exception('Image not found');
 }
+
 
 
 

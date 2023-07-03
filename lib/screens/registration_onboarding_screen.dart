@@ -9,15 +9,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:project1/Functions/userdata.dart';
 
 int? onboardingStatus;
-String? Folder_id;
+String? folder_Id;
+int? check;
 Future<void> onboardingDetails() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences preferences = await SharedPreferences.getInstance();
+  folder_Id = preferences.getString('folder_id');
+  await preferences.setString('folder_id', folder_id);
   onboardingStatus = preferences.getInt('onboarding_status');
   await preferences.setInt('onboarding_status', 1);
-  Folder_id = preferences.getString('folder_id');
-  print (Folder_id);
-  await preferences.setString('folder_id', folder_id);
+
 }
 
 class OnboardingScreen extends StatefulWidget {
@@ -37,8 +38,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Onboarding'),
+        title: const Text('Registration',style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),),
+        centerTitle: true,
+        backgroundColor: Colors.black,
       ),
       body: Form(
         autovalidateMode: AutovalidateMode.disabled,
@@ -230,7 +234,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             BorderSide(color: Colors.blueAccent.shade200, width: 2.5))),
               ),
               const SizedBox(
-                height: 15,
+                height: 20,
               ),
               ElevatedButton(
                 onPressed: () {
@@ -239,19 +243,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       is_loading=true;
 
                     });
+                    createFolderInFolder(
+                        emailController.text + phoneNoController.text);
 
 
                     updateGoogleSheet(
                        nameController.text,  emailController.text, phoneNoController.text);
-                    createFolderInFolder(
-                        emailController.text + phoneNoController.text);
-                    print(folder_id);
-                    Timer(const Duration(seconds: 6), () {
+
+
+                    Timer(const Duration(seconds: 9), () {
+                      print(folder_id);
                       onboardingDetails();
                       print(onboardingStatus);
-                      print(Folder_id);
+                      print(folder_Id);
                       setState(() {
                         is_loading=false;
+                        check=1;
                       });
                       Navigator.pushAndRemoveUntil(
                         context,

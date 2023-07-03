@@ -7,7 +7,13 @@ import 'package:project1/screens/history_image_screen.dart';
 import 'package:project1/screens/hompeage.dart';
 import 'package:project1/screens/registration_onboarding_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+  /*_handleTileClick(int index) {
+  print('Clicked on tile $index');
+   int selected_index= index;
+   print(titles_list[selected_index]);
+   return selected_index;
+  // Perform any additional operations with the index
+}*/
 
 
 
@@ -25,6 +31,7 @@ class History_page extends StatefulWidget {
 class _History_pageState extends State<History_page> {
 
   @override
+  bool is_loading= false;
   void initState() {
     // TODO: implement initState
 
@@ -33,9 +40,10 @@ class _History_pageState extends State<History_page> {
 
     fetch_title(folder_Id);
 
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 4), () {
 
       setState(() {
+        is_loading=true;
 
 
       });
@@ -51,32 +59,57 @@ class _History_pageState extends State<History_page> {
 
 
   Widget build(BuildContext context) {
+    final screenwidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      body: ListView.builder(
-        itemCount: titles_list.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(" "+titles_list[index],),
-            textColor: Colors.white,
-            titleTextStyle: TextStyle(fontSize: 20),
-
-            leading: Icon(Icons.photo_size_select_actual),
-            shape: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 1,
-                color: CupertinoColors.systemGrey
-              ),
-            ),
-            onTap: (){
-              setState(() {
-                int selectedIndex=index;
-
-              });
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> Fetched_Image(imageTitle: titles_list[index],)));
-            },
-          );
-        },
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text('History'),
+        centerTitle:true,
+        
       ),
+      body: Center(
+        child: Container(
+          width: screenwidth-24,
+          alignment: Alignment.center,
+          child: is_loading?ListView.builder(
+            itemCount: titles_list.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  SizedBox(
+                    height: 12,
+                  ),
+                  ListTile(
+                    title: Text(" "+titles_list[index],),
+                    textColor: Colors.white,
+                    titleTextStyle: TextStyle(fontSize: 20),
+
+                    leading: Icon(Icons.photo_size_select_actual,color: Colors.white,),
+                    shape: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 1.5,
+                          color: CupertinoColors.systemGrey
+                      ),
+                    ),
+                    onTap: (){
+
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Fetched_Image(imageTitle: titles_list[index],)));
+
+
+
+                    },
+                  ),
+                ],
+              );
+            },
+          )
+              :CircularProgressIndicator(
+            color: Colors.white,
+          ),
+        )
+      )
     );
   }
 }

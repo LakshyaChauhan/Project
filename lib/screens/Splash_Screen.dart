@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'package:project1/screens/hompeage.dart';
 import 'package:project1/screens/registration_onboarding_screen.dart';
@@ -49,16 +50,17 @@ class _SplashpageState extends State<Splashpage> {
     return Container(
       width: screenWidth,
       alignment: Alignment.center,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(150),
-            child: Image.asset(
-              'assets/dic_logo.png',
-              width: screenWidth - 100,
-            )),
-      ),
-    );
+      child: CircleAvatar(
+        child: SizedBox(
+          width: 208,
+          height: 208,
+          child: Image(image: AssetImage('assets/dic_logo.png'),),
+
+        ),
+        backgroundColor: Colors.white,
+        radius: 150,
+
+      ));
   }
 }
 //

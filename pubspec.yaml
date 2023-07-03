@@ -46,6 +46,8 @@ dependencies:
   googleapis: ^11.2.0
   path: ^1.8.3
   flutter_image_compress: ^2.0.3
+  photo_view: ^0.14.0
+
 
 dev_dependencies:
   flutter_test:
