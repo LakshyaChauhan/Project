@@ -1,13 +1,9 @@
-import 'dart:convert';
-
-import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:http/http.dart' as http;
 
 Future<Uint8List> fetchImage(String imagePath) async {
   var request = http.MultipartRequest(
-      'POST', Uri.parse('http://192.168.146.194:5000/image-size'));
+      'POST', Uri.parse('http://192.168.43.37:5000/image-size'));
   request.files.add(await http.MultipartFile.fromPath('image', imagePath));
 
   var response = await request.send();

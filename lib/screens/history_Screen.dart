@@ -1,12 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Functions/userdata.dart';
 import 'package:project1/screens/history_image_screen.dart';
-import 'package:project1/screens/hompeage.dart';
 import 'package:project1/screens/registration_onboarding_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
   /*_handleTileClick(int index) {
   print('Clicked on tile $index');
    int selected_index= index;
@@ -34,30 +32,17 @@ class _History_pageState extends State<History_page> {
   bool is_loading= false;
   void initState() {
     // TODO: implement initState
-
-
-
-
     fetch_title(folder_Id);
-
     Timer(const Duration(seconds: 4), () {
-
       setState(() {
         is_loading=true;
-
-
       });
-
-
     });
     super.initState();
   }
 
 
   @override
-
-
-
   Widget build(BuildContext context) {
     final screenwidth = MediaQuery.of(context).size.width;
 
@@ -78,7 +63,7 @@ class _History_pageState extends State<History_page> {
             itemBuilder: (context, index) {
               return Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   ),
                   ListTile(
@@ -86,8 +71,8 @@ class _History_pageState extends State<History_page> {
                     textColor: Colors.white,
                     titleTextStyle: TextStyle(fontSize: 20),
 
-                    leading: Icon(Icons.photo_size_select_actual,color: Colors.white,),
-                    shape: OutlineInputBorder(
+                    leading: const Icon(Icons.photo_size_select_actual,color: Colors.white,),
+                    shape: const OutlineInputBorder(
                       borderSide: BorderSide(
                           width: 1.5,
                           color: CupertinoColors.systemGrey
@@ -105,7 +90,7 @@ class _History_pageState extends State<History_page> {
               );
             },
           )
-              :CircularProgressIndicator(
+              : const CircularProgressIndicator(
             color: Colors.white,
           ),
         )
