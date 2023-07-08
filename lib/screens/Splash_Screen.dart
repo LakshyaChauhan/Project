@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'package:project1/screens/hompeage_screen.dart';
 import 'package:project1/screens/registration_onboarding_screen.dart';
@@ -50,17 +49,15 @@ class _SplashpageState extends State<Splashpage> {
     return Container(
       width: screenWidth,
       alignment: Alignment.center,
-      child: CircleAvatar(
-        child: SizedBox(
+      child: const CircleAvatar(
+        backgroundColor: Colors.white,
+        radius: 150,
+        child:  SizedBox( 
           width: 208,
           height: 208,
           child: Image(image: AssetImage('assets/dic_logo.png'),),
-
         ),
-        backgroundColor: Colors.white,
-        radius: 150,
-
-      ));
+        ));
   }
 }
 //

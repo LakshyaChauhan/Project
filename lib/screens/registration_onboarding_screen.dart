@@ -275,7 +275,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     shadowColor: Colors.green,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15))),
-                child:is_loading?CircularProgressIndicator(
+                child:is_loading? const CircularProgressIndicator(
                   color: Colors.white,
                 )
                     :const Text(
