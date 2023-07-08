@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:project1/screens/registration_onboarding_screen.dart';
@@ -12,7 +13,6 @@ Future <int?> Send_Image(String imagePath) async {
 
       'POST', Uri.parse('http://192.168.212.194:5000/image-size'));
 
-      'POST', Uri.parse('http://192.168.43.37:5000/image-size'));
 
   request.files.add(await http.MultipartFile.fromPath('image', imagePath));
 
