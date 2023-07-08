@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:project1/Functions/userdata.dart';
 import 'package:project1/screens/history_Screen.dart';
@@ -7,7 +6,6 @@ import 'package:project1/screens/registration_onboarding_screen.dart';
 import 'package:project1/widgets/browse.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
 import 'package:project1/widgets/capture.dart';
 import 'package:project1/screens/upload_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -113,5 +111,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 

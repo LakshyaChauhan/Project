@@ -1,12 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:googleapis/sheets/v4.dart' as sheets;
-import 'package:googleapis_auth/auth.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:googleapis_auth/auth_io.dart';
-import 'package:project1/screens/hompeage.dart';
 
 
 import 'package:project1/screens/registration_onboarding_screen.dart';
@@ -239,7 +235,7 @@ Future<Uint8List> fetchImageFromDrive( String imageTitle) async {
     final fileList = await driveApi.files.list(q: query);
     print(fileList);
 
-    if (fileList != null && fileList.files!.isNotEmpty) {
+    if (fileList.files!.isNotEmpty) {
 
   final fileId = fileList.files![0].id;
 
@@ -257,7 +253,3 @@ Future<Uint8List> fetchImageFromDrive( String imageTitle) async {
 
   throw Exception('Image not found');
 }
-
-
-
-

@@ -1,11 +1,6 @@
-import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:photo_view/photo_view.dart';
-
 import '../Functions/userdata.dart';
 
 
@@ -29,7 +24,7 @@ class Fetched_Image extends StatelessWidget {
             future: fetchImageFromDrive(imageTitle),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator(
+                return const CircularProgressIndicator(
                   strokeWidth: 4,
                   color: Colors.white,
                 );
@@ -42,7 +37,7 @@ class Fetched_Image extends StatelessWidget {
 
                 );
               } else {
-                return Text('Image not found');
+                return const Text('Image not found');
               }
             },
           ),

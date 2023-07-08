@@ -1,12 +1,9 @@
-import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project1/Functions/image_text_write.dart';
 import 'package:project1/screens/hompeage.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:project1/screens/registration_onboarding_screen.dart';
 import 'package:project1/screens/zoom_image.dart';
 
@@ -16,10 +13,15 @@ import '../Functions/userdata.dart';
 class ImageScreen extends StatefulWidget {
   ImageScreen({super.key, required this.image});
   final Uint8List image ;
+
   Uint8List? image2 ;
 
 
   @override
+
+
+ @override
+
   State<ImageScreen> createState() => _ImageScreenState();
 }
 
@@ -44,6 +46,7 @@ class _ImageScreenState extends State<ImageScreen> {
     imagetitle.dispose();
     super.dispose();
   }
+  @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenwidth = MediaQuery.of(context).size.width;
