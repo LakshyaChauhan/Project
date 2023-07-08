@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project1/Functions/image_detection.dart';
+import 'package:project1/Functions/image_text_write.dart';
 import 'package:project1/screens/hompeage.dart';
 import 'package:project1/screens/images_screen.dart';
 import 'package:project1/screens/registration_onboarding_screen.dart';
@@ -20,11 +22,11 @@ class UploadImage extends StatefulWidget {
 
 class _UploadImageState extends State<UploadImage> {
 
-  TextEditingController imagetitle = TextEditingController();
+  // TextEditingController imagetitle = TextEditingController();
   bool is_loading=false;
   @override
   void dispose() {
-    imagetitle.dispose();
+    // imagetitle.dispose();
     super.dispose();
   }
 
@@ -64,36 +66,36 @@ class _UploadImageState extends State<UploadImage> {
                                   const SizedBox(
                                     height: 30,
                                   ),
-                                  SizedBox(
-                                    width: screenWidth - 80,
-                                    height: 50,
-                                    child: TextField(
-                                      controller: imagetitle,
-                                      keyboardType: TextInputType.text,
-                                      decoration: InputDecoration(
-                                          label: const Text('Enter the title for image'),
-                                          labelStyle: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle: FontStyle.italic,
-                                              color: CupertinoColors.systemGrey),
-                                          disabledBorder: const OutlineInputBorder(
-                                            borderSide:  BorderSide(
-                                                color: CupertinoColors.systemGrey, width: 2.5),
-                                          ),
-                                          border: const OutlineInputBorder(
-                                            borderSide:  BorderSide(
-                                                color: CupertinoColors.systemGrey, width: 5),
-                                          ),
-                                          enabledBorder:const  OutlineInputBorder(
-                                              borderSide:  BorderSide(
-                                                  color: CupertinoColors.systemGrey)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(21),
-                                              borderSide: const BorderSide(
-                                                  color: CupertinoColors.activeBlue, width: 2.5))),
-                                    ),
-                                  ),
+                                  // SizedBox(
+                                  //   width: screenWidth - 80,
+                                  //   height: 50,
+                                  //   child: TextField(
+                                  //     controller: imagetitle,
+                                  //     keyboardType: TextInputType.text,
+                                  //     decoration: InputDecoration(
+                                  //         label: const Text('Enter the title for image'),
+                                  //         labelStyle: const TextStyle(
+                                  //             fontSize: 16,
+                                  //             fontWeight: FontWeight.w600,
+                                  //             fontStyle: FontStyle.italic,
+                                  //             color: CupertinoColors.systemGrey),
+                                  //         disabledBorder: const OutlineInputBorder(
+                                  //           borderSide:  BorderSide(
+                                  //               color: CupertinoColors.systemGrey, width: 2.5),
+                                  //         ),
+                                  //         border: const OutlineInputBorder(
+                                  //           borderSide:  BorderSide(
+                                  //               color: CupertinoColors.systemGrey, width: 5),
+                                  //         ),
+                                  //         enabledBorder:const  OutlineInputBorder(
+                                  //             borderSide:  BorderSide(
+                                  //                 color: CupertinoColors.systemGrey)),
+                                  //         focusedBorder: OutlineInputBorder(
+                                  //             borderRadius: BorderRadius.circular(21),
+                                  //             borderSide: const BorderSide(
+                                  //                 color: CupertinoColors.activeBlue, width: 2.5))),
+                                  //   ),
+                                  // ),
                                   const  SizedBox(
                                     height: 60,
                                   ),
@@ -103,11 +105,14 @@ class _UploadImageState extends State<UploadImage> {
                                         onPressed: () {
                                           is_loading= true;
                                           String imagePath = widget.image!.path;
+
+
+
                                           fetchImage(imagePath)
                                               .then((image) => Navigator.push(context,
                                               MaterialPageRoute(builder: (context) {
                                                 return ImageScreen(
-                                                  image: image,
+                                                  image: image!,
 
                                                 );
                                               })))
