@@ -1,10 +1,14 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:photo_view/photo_view.dart';
+import 'package:project1/screens/history_Screen.dart';
+import 'package:project1/screens/registration_onboarding_screen.dart';
 
 import '../Functions/userdata.dart';
 
@@ -21,6 +25,29 @@ class Fetched_Image extends StatelessWidget {
   final screenwidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar:  AppBar(backgroundColor: Colors.black, actions: [
+                    TextButton(
+                        onPressed: () {
+                          deletePhotoFromDrive(folder_Id!, imageTitle);
+                          titles_list.remove(imageTitle);
+                           Timer(Duration(seconds: 2), () {
+                             Navigator.pop(context,true);
+
+                             //   Navigator.popUntil(context, ModalRoute.withName('/'));
+                          //   // Navigator.popAndPushNamed(context, '(context) => History_page()');
+                          //   // Navigator.pushReplacement(
+                          //   //   context,
+                          //   //   MaterialPageRoute(
+                          //   //       builder: (context) =>  History_page()),
+                          //   // );
+                           });
+                        },
+                        child: Text(
+                          'DELETE',
+                          style: GoogleFonts.breeSerif(
+                              color: const Color.fromARGB(255, 0, 96, 160), fontSize: 16),
+                        )),
+    ]),
       body: Center(
         child: Container(
           width: screenwidth-30,

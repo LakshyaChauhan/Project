@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Functions/userdata.dart';
 import 'package:project1/screens/history_image_screen.dart';
-import 'package:project1/screens/hompeage.dart';
+import 'package:project1/screens/hompeage_screen.dart';
 import 'package:project1/screens/registration_onboarding_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
   /*_handleTileClick(int index) {
@@ -34,6 +34,7 @@ class _History_pageState extends State<History_page> {
   bool is_loading= false;
   void initState() {
     // TODO: implement initState
+
 
 
 
@@ -93,9 +94,19 @@ class _History_pageState extends State<History_page> {
                           color: CupertinoColors.systemGrey
                       ),
                     ),
-                    onTap: (){
+                    onTap: () async {
+                              bool change = await Navigator.push(
+                              context, MaterialPageRoute(builder: (context) => Fetched_Image(
+                              imageTitle: titles_list[index],
+                              )));
 
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Fetched_Image(imageTitle: titles_list[index],)));
+                              if (change) {
+                              setState(() {
+                              fetch_title(folder_Id);
+
+                              });}
+
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)=> Fetched_Image(imageTitle: titles_list[index],)));
 
 
 

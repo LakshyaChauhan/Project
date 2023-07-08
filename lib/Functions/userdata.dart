@@ -6,7 +6,7 @@ import 'package:googleapis/sheets/v4.dart' as sheets;
 import 'package:googleapis_auth/auth.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:googleapis_auth/auth_io.dart';
-import 'package:project1/screens/hompeage.dart';
+import 'package:project1/screens/hompeage_screen.dart';
 
 
 import 'package:project1/screens/registration_onboarding_screen.dart';
@@ -256,6 +256,23 @@ Future<Uint8List> fetchImageFromDrive( String imageTitle) async {
   }
 
   throw Exception('Image not found');
+}
+Future<void> deletePhotoFromDrive(String folderId, String photoName) async {
+
+
+  final client = await auth.clientViaServiceAccount(Service_Credentials(), [drive.DriveApi.driveFileScope]);
+  final driveApi = drive.DriveApi(client);
+
+  // Search for the file ID using the file name
+  final fileList = await driveApi.files.list(q: "name = '$photoName' and '$folderId' in parents");
+  if (fileList.files != null && fileList.files!.isNotEmpty) {
+    final fileId = fileList.files!.first.id;
+
+    // Delete the file
+    await driveApi.files.delete(fileId!);
+  } else {
+    print('File not found');
+  }
 }
 
 

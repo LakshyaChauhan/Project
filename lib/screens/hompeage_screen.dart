@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 import 'package:project1/widgets/capture.dart';
-import 'package:project1/screens/upload_image.dart';
+import 'package:project1/screens/upload_image_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> getFolderId() async {

@@ -1,14 +1,14 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project1/Functions/image_detection.dart';
-import 'package:project1/Functions/image_text_write.dart';
-import 'package:project1/screens/hompeage.dart';
-import 'package:project1/screens/images_screen.dart';
+import 'package:project1/Functions/fetch_image_fromServer.dart';
+import 'package:project1/screens/hompeage_screen.dart';
+import 'package:project1/screens/image_screen.dart';
 import 'package:project1/screens/registration_onboarding_screen.dart';
 
-import '../Functions/fetch_image_size.dart';
+import '../Functions/send_Image_toServer.dart';
 import '../Functions/userdata.dart';
 
 class UploadImage extends StatefulWidget {
@@ -18,6 +18,15 @@ class UploadImage extends StatefulWidget {
 
   @override
   State<UploadImage> createState() => _UploadImageState();
+}
+Future<Uint8List> fileToUint8List(File file) async {
+  // Read the file as bytes
+  List<int> bytes = await file.readAsBytes();
+
+  // Convert the bytes to Uint8List
+  Uint8List uint8List = Uint8List.fromList(bytes);
+
+  return uint8List;
 }
 
 class _UploadImageState extends State<UploadImage> {
@@ -102,17 +111,20 @@ class _UploadImageState extends State<UploadImage> {
                                   SizedBox(
                                     width: screenWidth - 150,
                                     child: ElevatedButton(
-                                        onPressed: () {
+                                        onPressed: () async{
                                           is_loading= true;
                                           String imagePath = widget.image!.path;
+                                          File file = widget.image!;
+                                          Uint8List uint8List = await fileToUint8List(file);
 
 
 
-                                          fetchImage(imagePath)
-                                              .then((image) => Navigator.push(context,
+                                          Send_Image(imagePath)
+                                              .then((simplified_length) => Navigator.pushReplacement(context,
                                               MaterialPageRoute(builder: (context) {
                                                 return ImageScreen(
-                                                  image: image!,
+                                                  image: uint8List,
+                                                  slider_divisions: simplified_length!,
 
                                                 );
                                               })))

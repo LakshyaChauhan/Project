@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
-import 'package:project1/screens/hompeage.dart';
+import 'package:project1/screens/hompeage_screen.dart';
 import 'package:project1/screens/registration_onboarding_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
