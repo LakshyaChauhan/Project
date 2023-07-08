@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project1/screens/history_Screen.dart';
+// import 'package:project1/screens/history_Screen.dart';
 
 
 import 'package:project1/screens/splash_screen.dart';

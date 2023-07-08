@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, camel_case_types, non_constant_identifier_names
+
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,22 +18,21 @@ import 'package:project1/screens/registration_onboarding_screen.dart';
 
 
 class History_page extends StatefulWidget {
-   History_page({Key? key, }) : super(key: key);
+   const History_page({Key? key, }) : super(key: key);
    //List<dynamic> ImageTitles =[];
 
 
 
 
-   @override
+  @override
   State<History_page> createState() => _History_pageState();
 }
 
 class _History_pageState extends State<History_page> {
 
-  @override
   bool is_loading= false;
+  @override
   void initState() {
-    // TODO: implement initState
     fetch_title(folder_Id);
     Timer(const Duration(seconds: 4), () {
       setState(() {
@@ -50,7 +51,7 @@ class _History_pageState extends State<History_page> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('History'),
+        title: const Text('History'),
         centerTitle:true,
         
       ),
@@ -69,7 +70,7 @@ class _History_pageState extends State<History_page> {
                   ListTile(
                     title: Text(" "+titles_list[index],),
                     textColor: Colors.white,
-                    titleTextStyle: TextStyle(fontSize: 20),
+                    titleTextStyle: const TextStyle(fontSize: 20),
 
                     leading: const Icon(Icons.photo_size_select_actual,color: Colors.white,),
                     shape: const OutlineInputBorder(

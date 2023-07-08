@@ -1,10 +1,12 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:project1/Functions/image_detection.dart';
-import 'package:project1/Functions/image_text_write.dart';
-import 'package:project1/screens/hompeage.dart';
+// import 'package:project1/Functions/image_text.dart';
+// import 'package:project1/Functions/image_text_write.dart';
+// import 'package:project1/screens/hompeage.dart';
 
 import 'package:project1/screens/images_screen.dart';
 import '../Functions/fetch_image_size.dart';

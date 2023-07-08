@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
@@ -6,12 +8,12 @@ import '../Functions/userdata.dart';
 
 
 class Fetched_Image extends StatelessWidget {
-  Fetched_Image({Key? key,required this.imageTitle }) : super(key: key);
-  String imageTitle;
+  const Fetched_Image({Key? key,required this.imageTitle }) : super(key: key);
+  final String imageTitle;
 
 
-@override
 
+  @override
   Widget build(BuildContext context) {
   final screenwidth = MediaQuery.of(context).size.width;
     return Scaffold(

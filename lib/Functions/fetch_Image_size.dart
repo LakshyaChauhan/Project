@@ -1,3 +1,6 @@
+// ignore_for_file: file_names, non_constant_identifier_names
+
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:project1/screens/registration_onboarding_screen.dart';
@@ -6,13 +9,12 @@ import 'package:project1/screens/registration_onboarding_screen.dart';
 Future <Uint8List?> fetchImage(String imagePath) async {
   var headers = {'Content-Type': 'application/json'};
   var body = json.encode({'folderId': folder_Id});
-  var url = Uri.parse('http://192.168.212.194:5000/endpoint');
+  var url = Uri.parse('http://192.168.43.37:5000/endpoint');
   http.post(url , headers: headers, body: body);
   var request = http.MultipartRequest(
 
-      'POST', Uri.parse('http://192.168.212.194:5000/image-size'));
-
       'POST', Uri.parse('http://192.168.43.37:5000/image-size'));
+
 
   request.files.add(await http.MultipartFile.fromPath('image', imagePath));
 

@@ -34,10 +34,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     if(check==1){
       print('hello');
-      Timer(Duration(seconds: 4), () {
+      Timer(const Duration(seconds: 4), () {
         getFolderId();
         setState(() {
           check=2;
@@ -58,7 +57,7 @@ class _HomePageState extends State<HomePage> {
 
     super.initState();
   }
- @override
+ 
 
   File? selectedImage;
 
@@ -88,9 +87,9 @@ class _HomePageState extends State<HomePage> {
         leading: IconButton(
             onPressed: (){
 
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> History_page()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>const History_page()));
             },
-            icon: Icon(Icons.history_sharp))
+            icon: const Icon(Icons.history_sharp))
       ),
       body: SizedBox(
         height: double.infinity,

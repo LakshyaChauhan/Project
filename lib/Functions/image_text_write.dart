@@ -1,8 +1,10 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
-import 'package:project1/screens/registration_onboarding_screen.dart';
+// import 'package:project1/screens/registration_onboarding_screen.dart';
 //late List simplified;
 
 Future<Uint8List?> ImageText(String count) async {
@@ -11,7 +13,7 @@ Future<Uint8List?> ImageText(String count) async {
   var url = Uri.parse('http://192.168.212.194:5000/count');
   var response = await http.post(url, headers: headers, body: body);
   if (response.statusCode == 200) {
-     final img_response = await response.bodyBytes;
+     final img_response =  response.bodyBytes;
      return img_response;
 
 
