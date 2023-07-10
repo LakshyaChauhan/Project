@@ -6,7 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Functions/userdata.dart';
 import 'package:project1/screens/history_image_screen.dart';
+import 'package:project1/screens/hompeage_screen.dart';
 import 'package:project1/screens/registration_onboarding_screen.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
+
   /*_handleTileClick(int index) {
   print('Clicked on tile $index');
    int selected_index= index;
@@ -34,6 +38,14 @@ class _History_pageState extends State<History_page> {
   bool is_loading= false;
   @override
   void initState() {
+
+    // TODO: implement initState
+
+
+
+
+
+
     fetch_title(folder_Id);
 
     Timer(const Duration(seconds: 4), () {
@@ -51,6 +63,9 @@ class _History_pageState extends State<History_page> {
 
 
   @override
+
+
+
   Widget build(BuildContext context) {
     final screenwidth = MediaQuery.of(context).size.width;
 
@@ -71,7 +86,7 @@ class _History_pageState extends State<History_page> {
             itemBuilder: (context, index) {
               return Column(
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     height: 12,
                   ),
                   ListTile(
@@ -79,8 +94,8 @@ class _History_pageState extends State<History_page> {
                     textColor: Colors.white,
                     titleTextStyle:const  TextStyle(fontSize: 20),
 
-                    leading: const Icon(Icons.photo_size_select_actual,color: Colors.white,),
-                    shape: const OutlineInputBorder(
+                    leading: Icon(Icons.photo_size_select_actual,color: Colors.white,),
+                    shape: OutlineInputBorder(
                       borderSide: BorderSide(
                           width: 1.5,
                           color: CupertinoColors.systemGrey
@@ -96,7 +111,13 @@ class _History_pageState extends State<History_page> {
                               setState(() {
                               fetch_title(folder_Id);
 
+
                               });}
+
+
+
+                              });}
+
 
                       // Navigator.push(context, MaterialPageRoute(builder: (context)=> Fetched_Image(imageTitle: titles_list[index],)));
 
@@ -108,7 +129,11 @@ class _History_pageState extends State<History_page> {
               );
             },
           )
+
+              :CircularProgressIndicator(
+
               :const CircularProgressIndicator(
+
             color: Colors.white,
           ),
         )

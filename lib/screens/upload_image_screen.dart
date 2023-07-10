@@ -1,3 +1,17 @@
+
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:project1/Functions/fetch_image_fromServer.dart';
+import 'package:project1/screens/hompeage_screen.dart';
+import 'package:project1/screens/image_screen.dart';
+import 'package:project1/screens/registration_onboarding_screen.dart';
+
+import '../Functions/send_Image_toServer.dart';
+import '../Functions/userdata.dart';
+
 // ignore_for_file: non_constant_identifier_names
 
 import 'dart:io';
@@ -6,6 +20,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/screens/image_screen.dart';
 import '../Functions/send_Image_toServer.dart';
+
 
 class UploadImage extends StatefulWidget {
   // const UploadImage({Key? key}) : super(key: key);
@@ -41,7 +56,11 @@ class _UploadImageState extends State<UploadImage> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
+
+        child:is_loading? CircularProgressIndicator(
+
         child:is_loading?const  CircularProgressIndicator(
+
                           backgroundColor: Colors.white,
                         )
                          :SingleChildScrollView(
@@ -152,4 +171,4 @@ class _UploadImageState extends State<UploadImage> {
       ),
     );
   }
-}
+

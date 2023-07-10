@@ -1,6 +1,11 @@
+
+import 'dart:convert';
+import 'dart:typed_data';
+
 // ignore_for_file: non_constant_identifier_names, file_names
 
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:project1/screens/registration_onboarding_screen.dart';
  //late List simplified;
@@ -8,11 +13,19 @@ import 'package:project1/screens/registration_onboarding_screen.dart';
 Future <int?> Send_Image(String imagePath) async {
   var headers = {'Content-Type': 'application/json'};
   var body = json.encode({'folderId': folder_Id});
+
+  var url = Uri.parse('http://192.168.212.194:5000/endpoint');
+  http.post(url , headers: headers, body: body);
+  var request = http.MultipartRequest(
+
+      'POST', Uri.parse('http://192.168.212.194:5000/image-size'));
+
   var url = Uri.parse('http://192.168.43.37:5000/endpoint');
   http.post(url , headers: headers, body: body);
   var request = http.MultipartRequest(
 
       'POST', Uri.parse('http://192.168.43.37:5000/image-size'));
+
 
 
   request.files.add(await http.MultipartFile.fromPath('image', imagePath));

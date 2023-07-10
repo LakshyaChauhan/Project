@@ -1,11 +1,23 @@
+
+import 'dart:async';
+import 'dart:convert';
+
 // ignore_for_file: camel_case_types
 
 import 'dart:async';
+
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:photo_view/photo_view.dart';
+import 'package:project1/screens/history_Screen.dart';
+
+import 'package:photo_view/photo_view.dart';
+
 import 'package:project1/screens/registration_onboarding_screen.dart';
 
 import '../Functions/userdata.dart';
@@ -28,7 +40,11 @@ class Fetched_Image extends StatelessWidget {
                         onPressed: () {
                           deletePhotoFromDrive(folder_Id!, imageTitle);
                           titles_list.remove(imageTitle);
+
+                           Timer(Duration(seconds: 2), () {
+
                            Timer(const Duration(seconds: 1), () {
+
                              Navigator.pop(context,true);
 
                              //   Navigator.popUntil(context, ModalRoute.withName('/'));
@@ -54,7 +70,7 @@ class Fetched_Image extends StatelessWidget {
             future: fetchImageFromDrive(imageTitle),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator(
+                return CircularProgressIndicator(
                   strokeWidth: 4,
                   color: Colors.white,
                 );
@@ -67,7 +83,7 @@ class Fetched_Image extends StatelessWidget {
 
                 );
               } else {
-                return const Text('Image not found');
+                return Text('Image not found');
               }
             },
           ),

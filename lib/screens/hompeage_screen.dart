@@ -34,9 +34,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+
+    // TODO: implement initState
+    if(check==1){
+      print('hello');
+      Timer(Duration(seconds: 4), () {
+
     if(check==1){
       print('hello');
       Timer(const Duration(seconds: 4), () {
+
         getFolderId();
         setState(() {
           check=2;
@@ -58,6 +65,10 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+ @override
+
+
+
 
   File? selectedImage;
 
@@ -70,6 +81,9 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       selectedImage = tempImage;
       print('image got selected');
+
+      Navigator.pushReplacement(
+
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -84,12 +98,54 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text('Project'),
+
+          actions: [
+            PopupMenuButton<String>(
+              elevation: 10,
+              iconSize: 30,
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem<String>(
+                    value: 'option1',
+                    child: TextButton.icon(
+                      label: Text("History",style: TextStyle(fontSize: 16,color: Colors.white),),
+                      icon: Icon(Icons.history_outlined,color: Colors.white,),
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> History_page()));
+
+                      },
+                    ),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'option2',
+                    child: Text('Option 2'),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'option3',
+                    child: Text('Option 3'),
+                  ),
+                ];
+              },
+              onSelected: (String value) {
+                // Handle dropdown menu item selection
+                print('Selected option: $value');
+              },
+            ),
+          ],
+        // leading: IconButton(
+        //     onPressed: (){
+        //
+        //       Navigator.push(context, MaterialPageRoute(builder: (context)=> History_page()));
+        //     },
+        //     icon: Icon(Icons.history_sharp))
+
         leading: IconButton(
             onPressed: (){
 
               Navigator.push(context, MaterialPageRoute(builder: (context)=>const  History_page()));
             },
             icon: const Icon(Icons.history_sharp))
+
       ),
       body: SizedBox(
         height: double.infinity,
@@ -110,3 +166,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+

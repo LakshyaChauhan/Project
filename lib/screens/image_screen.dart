@@ -1,11 +1,21 @@
+
+import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
+
+
 // ignore_for_file: must_be_immutable, non_constant_identifier_names
 
 import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project1/Functions/fetch_image_fromServer.dart';
 import 'package:project1/screens/hompeage_screen.dart';
+
+import 'package:photo_view/photo_view.dart';
+
 import 'package:project1/screens/registration_onboarding_screen.dart';
 import 'package:project1/screens/zoom_image_screen.dart';
 
@@ -47,6 +57,8 @@ class _ImageScreenState extends State<ImageScreen> {
 
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -68,7 +80,11 @@ class _ImageScreenState extends State<ImageScreen> {
                   GestureDetector(
                     onTap: (){
                       count_changed?Navigator.push(context, MaterialPageRoute(builder: (context) => ZoomImage(image: widget.image2!,)))
+
+                                   :Navigator.push(context, MaterialPageRoute(builder: (context) => ZoomImage(image: widget.image!,)));
+
                                    :Navigator.push(context, MaterialPageRoute(builder: (context) => ZoomImage(image: widget.image,)));
+
                     },
                       child:count_changed?Image(image: MemoryImage(widget.image2!), fit: BoxFit.contain,)
                           :Image(image: MemoryImage(widget.image), fit: BoxFit.contain,)
@@ -118,7 +134,11 @@ class _ImageScreenState extends State<ImageScreen> {
                   onPressed: () {
                     showDialog(context: context, builder: (context)=>
                         SimpleDialog(
+
+                          contentPadding: EdgeInsets.all(20),
+
                           contentPadding: const EdgeInsets.all(20),
+
                             children: [
                              SizedBox(
                                height: 55,
@@ -199,7 +219,11 @@ class _ImageScreenState extends State<ImageScreen> {
                         fontSize: 20),
                   ),
                 )
+
+                                   : SizedBox()
+
                                    :const  SizedBox()
+
               ),
             ),
             SizedBox(
@@ -213,7 +237,11 @@ class _ImageScreenState extends State<ImageScreen> {
                   onPressed: () {
                     DeleteServerData(folder_Id!);
                     count_changed=false;
+
+                    Navigator.pushReplacement(
+
                     Navigator.push(
+
                       context,
                       MaterialPageRoute(
                           builder: (context) => const HomePage()),
@@ -244,4 +272,4 @@ class _ImageScreenState extends State<ImageScreen> {
       ),
     );
   }
-}
+
