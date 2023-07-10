@@ -6,7 +6,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project1/screens/hompeage.dart';
+import 'package:project1/screens/hompeage_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:project1/Functions/userdata.dart';
 
