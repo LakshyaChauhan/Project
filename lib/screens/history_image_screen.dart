@@ -16,30 +16,32 @@ class Fetched_Image extends StatelessWidget {
     final screenwidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(backgroundColor: Colors.black, actions: [
-        TextButton(
-            onPressed: () {
-              deletePhotoFromDrive(folder_Id!, imageTitle);
-              titles_list.remove(imageTitle);
+      appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 0, 96, 160),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  deletePhotoFromDrive(folder_Id!, imageTitle);
+                  titles_list.remove(imageTitle);
 
-              Timer(const Duration(seconds: 1), () {
-                Navigator.pop(context, true);
+                  Timer(const Duration(seconds: 1), () {
+                    Navigator.pop(context, true);
 
-                //   Navigator.popUntil(context, ModalRoute.withName('/'));
-                //   // Navigator.popAndPushNamed(context, '(context) => History_page()');
-                //   // Navigator.pushReplacement(
-                //   //   context,
-                //   //   MaterialPageRoute(
-                //   //       builder: (context) =>  History_page()),
-                //   // );
-              });
-            },
-            child: Text(
-              'DELETE',
-              style: GoogleFonts.breeSerif(
-                  color: const Color.fromARGB(255, 0, 96, 160), fontSize: 16),
-            )),
-      ]),
+                    //   Navigator.popUntil(context, ModalRoute.withName('/'));
+                    //   // Navigator.popAndPushNamed(context, '(context) => History_page()');
+                    //   // Navigator.pushReplacement(
+                    //   //   context,
+                    //   //   MaterialPageRoute(
+                    //   //       builder: (context) =>  History_page()),
+                    //   // );
+                  });
+                },
+                child: Text(
+                  'DELETE',
+                  style:
+                      GoogleFonts.breeSerif(color: Colors.white, fontSize: 16),
+                )),
+          ]),
       body: Center(
         child: Container(
           width: screenwidth - 30,

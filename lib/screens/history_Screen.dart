@@ -43,7 +43,7 @@ class _History_pageState extends State<History_page> {
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: const Color.fromARGB(255, 0, 96, 160),
           title: const Text('History'),
           centerTitle: true,
         ),

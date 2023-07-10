@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
       selectedImage = tempImage;
       print('image got selected');
 
-      Navigator.pushReplacement(
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => UploadImage(image: selectedImage)));
@@ -70,64 +70,63 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: const Text('Project'),
-          actions: [
-            PopupMenuButton<String>(
-              elevation: 10,
-              iconSize: 30,
-              itemBuilder: (BuildContext context) {
-                return [
-                  PopupMenuItem<String>(
-                    value: 'option1',
-                    child: TextButton.icon(
-                      label: const Text(
-                        "History",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                      icon: const Icon(
-                        Icons.history_outlined,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const History_page()));
-                      },
+        backgroundColor: const Color.fromARGB(255, 0, 96, 160),
+        title: const Text(
+          ' Project',
+        ),
+        actions: [
+          PopupMenuButton<String>(
+            elevation: 10,
+            iconSize: 28,
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem<String>(
+                  value: 'option1',
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const History_page()));
+                    },
+                    child: const Text(
+                      "History",
+                      style: TextStyle(fontSize: 15, color: Colors.white),
                     ),
                   ),
-                  const PopupMenuItem<String>(
-                    value: 'option2',
-                    child: Text('Option 2'),
-                  ),
-                  const PopupMenuItem<String>(
-                    value: 'option3',
-                    child: Text('Option 3'),
-                  ),
-                ];
-              },
-              onSelected: (String value) {
-                // Handle dropdown menu item selection
-                print('Selected option: $value');
-              },
-            ),
-          ],
-          // leading: IconButton(
-          //     onPressed: (){
-          //
-          //       Navigator.push(context, MaterialPageRoute(builder: (context)=> History_page()));
-          //     },
-          //     icon: Icon(Icons.history_sharp))
+                ),
+                const PopupMenuItem<String>(
+                  value: 'option2',
+                  child: Text('Option 2'),
+                ),
+                const PopupMenuItem<String>(
+                  value: 'option3',
+                  child: Text('Option 3'),
+                ),
+              ];
+            },
+            onSelected: (String value) {
+              // Handle dropdown menu item selection
+              print('Selected option: $value');
+            },
+          ),
+        ],
+        // leading: IconButton(
+        //     onPressed: (){
+        //
+        //       Navigator.push(context, MaterialPageRoute(builder: (context)=> History_page()));
+        //     },
+        //     icon: Icon(Icons.history_sharp))
 
-          leading: IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const History_page()));
-              },
-              icon: const Icon(Icons.history_sharp))),
+        // leading: IconButton(
+        //     onPressed: () {
+        //       Navigator.push(
+        //           context,
+        //           MaterialPageRoute(
+        //               builder: (context) => const History_page()));
+        //     },
+        //     icon: const Icon(Icons.history_sharp))
+      ),
       body: SizedBox(
         height: double.infinity,
         width: double.infinity,
