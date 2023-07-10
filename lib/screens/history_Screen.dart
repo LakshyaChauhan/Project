@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, camel_case_types, non_constant_identifier_names
+
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
@@ -6,7 +8,9 @@ import 'package:project1/Functions/userdata.dart';
 import 'package:project1/screens/history_image_screen.dart';
 import 'package:project1/screens/hompeage_screen.dart';
 import 'package:project1/screens/registration_onboarding_screen.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
   /*_handleTileClick(int index) {
   print('Clicked on tile $index');
    int selected_index= index;
@@ -18,22 +22,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class History_page extends StatefulWidget {
-   History_page({Key? key, }) : super(key: key);
+   const History_page({Key? key, }) : super(key: key);
    //List<dynamic> ImageTitles =[];
 
 
 
 
-   @override
+  @override
   State<History_page> createState() => _History_pageState();
 }
 
 class _History_pageState extends State<History_page> {
 
-  @override
+  
   bool is_loading= false;
+  @override
   void initState() {
+
     // TODO: implement initState
+
 
 
 
@@ -66,7 +73,7 @@ class _History_pageState extends State<History_page> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('History'),
+        title: const Text('History'),
         centerTitle:true,
         
       ),
@@ -85,7 +92,7 @@ class _History_pageState extends State<History_page> {
                   ListTile(
                     title: Text(" "+titles_list[index],),
                     textColor: Colors.white,
-                    titleTextStyle: TextStyle(fontSize: 20),
+                    titleTextStyle:const  TextStyle(fontSize: 20),
 
                     leading: Icon(Icons.photo_size_select_actual,color: Colors.white,),
                     shape: OutlineInputBorder(
@@ -104,7 +111,13 @@ class _History_pageState extends State<History_page> {
                               setState(() {
                               fetch_title(folder_Id);
 
+
                               });}
+
+
+
+                              });}
+
 
                       // Navigator.push(context, MaterialPageRoute(builder: (context)=> Fetched_Image(imageTitle: titles_list[index],)));
 
@@ -116,7 +129,11 @@ class _History_pageState extends State<History_page> {
               );
             },
           )
+
               :CircularProgressIndicator(
+
+              :const CircularProgressIndicator(
+
             color: Colors.white,
           ),
         )

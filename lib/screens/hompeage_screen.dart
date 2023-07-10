@@ -34,10 +34,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+
     // TODO: implement initState
     if(check==1){
       print('hello');
       Timer(Duration(seconds: 4), () {
+
+    if(check==1){
+      print('hello');
+      Timer(const Duration(seconds: 4), () {
+
         getFolderId();
         setState(() {
           check=2;
@@ -58,7 +64,11 @@ class _HomePageState extends State<HomePage> {
 
     super.initState();
   }
+
  @override
+
+
+
 
   File? selectedImage;
 
@@ -71,7 +81,10 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       selectedImage = tempImage;
       print('image got selected');
+
       Navigator.pushReplacement(
+
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => UploadImage(image: selectedImage)));
@@ -85,6 +98,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text('Project'),
+
           actions: [
             PopupMenuButton<String>(
               elevation: 10,
@@ -124,6 +138,14 @@ class _HomePageState extends State<HomePage> {
         //       Navigator.push(context, MaterialPageRoute(builder: (context)=> History_page()));
         //     },
         //     icon: Icon(Icons.history_sharp))
+
+        leading: IconButton(
+            onPressed: (){
+
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>const  History_page()));
+            },
+            icon: const Icon(Icons.history_sharp))
+
       ),
       body: SizedBox(
         height: double.infinity,

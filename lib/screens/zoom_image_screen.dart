@@ -17,4 +17,3 @@ class ZoomImage extends StatelessWidget {
       ),
     );
   }
-}
