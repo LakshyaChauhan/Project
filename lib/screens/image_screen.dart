@@ -213,7 +213,7 @@ class _ImageScreenState extends State<ImageScreen> {
                   onPressed: () {
                     DeleteServerData(folder_Id!);
                     count_changed=false;
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const HomePage()),
