@@ -8,10 +8,10 @@ Future<int?> Send_Image(String imagePath) async {
   var headers = {'Content-Type': 'application/json'};
   var body = json.encode({'folderId': folder_Id});
 
-  var url = Uri.parse('http://192.168.43.37:5000/endpoint');
+  var url = Uri.parse('http://<yourip>:5000/endpoint');
   http.post(url, headers: headers, body: body);
   var request = http.MultipartRequest(
-      'POST', Uri.parse('http://192.168.43.37:5000/image-size'));
+      'POST', Uri.parse('http://<yourup>:5000/image-size'));
   request.files.add(await http.MultipartFile.fromPath('image', imagePath));
 
   // request.fields['folderId']=folder_Id.toString();
