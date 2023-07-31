@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 void DeleteServerData(String fid) async {
   String stringValue = fid;
 
-  var url = 'http://192.168.43.37:5000/delete';
+  var url = 'http://<yourip>:5000/delete';
 
   var response = await http.post(
     Uri.parse(url),
