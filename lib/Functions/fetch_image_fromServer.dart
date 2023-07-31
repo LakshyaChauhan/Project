@@ -6,7 +6,7 @@ Future<Uint8List?> Fetch_Drawed_Image(String fid, int count) async {
   int intValue = count;
   String stringValue = fid;
 
-  var url = 'http://192.168.43.37:5000/count';
+  var url = 'http://<yourip>:5000/count';
 
   var response = await http.post(
     Uri.parse(url),
